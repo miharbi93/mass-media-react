@@ -1,13 +1,471 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+ /* Login Style */
+
+ .container {
+   margin-top: 100px;
+ }
+
+
+ /* Navigation Style */
+
+ /* Interface Styles including [Navigation, Header] */
+
+ .logo_sidebar {
+   width: 280px;
+   height: 7.3%;
+   z-index: 99;
+   position: fixed;
+   background-color: rgb(48, 56, 62);
+ }
+
+ .logo_sidebar h4 {
+   color: white;
+   padding: 20px;
+ }
+
+ .sidebar {
+   top: 7%;
+   position: fixed;
+   height: 100%;
+   width: 280px;
+   background: #11101d;
+   padding: 15px;
+   z-index: 99;
+ }
+
+
+ .sidebar a {
+   color: #fff;
+   text-decoration: none;
+ }
+
+ .menu-content {
+   position: relative;
+   height: 100%;
+   width: 100%;
+   margin-top: 45px;
+ }
+
+ .menu-items {
+   height: 100%;
+   width: 100%;
+   padding-left: 0;
+   list-style: none;
+   transition: all 0.4s ease;
+ }
+
+ .items a {
+   padding: 15px;
+   display: inline-block;
+   width: 100%;
+   margin-top: 10px;
+   border-radius: 12px;
+ }
+
+ .items i {
+   font-size: 20px;
+   color: white;
+ }
+
+ .items a:hover,
+ /* .menu-title:hover {
+             background: rgba(255, 255, 255, 0.1);
+           } */
+
+
+ .items a.active {
+   background: rgba(255, 255, 255, 0.1);
+   font-weight: 900;
+
+ }
+
+ .items .active:hover {
+   background: rgba(255, 255, 255, 0.1);
+ }
+
+
+
+ .menu-title {
+   color: #fff;
+   font-size: 20px;
+   font-weight: bold;
+   padding: 15px 6px;
+   text-align: center;
+ }
+
+ .profile_info {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+ }
+
+ .profile_info .profile_image {
+   width: 100px;
+   height: 100px;
+   border-radius: 100px;
+   margin-bottom: 10px;
+ }
+
+ .profile_info h4 {
+   color: #ccc;
+   margin-top: 15px;
+   margin-bottom: 20px;
+ }
+
+ .line-after-profile {
+   color: darkgrey;
+ }
+
+ .navbars {
+   position: fixed;
+   color: #fff;
+   padding: 15px 20px;
+   font-size: 25px;
+   background-color: rgb(18, 81, 129);
+ }
+
+ .navbars,
+ .main {
+   left: 280px;
+   width: calc(100% - 280px);
+   transition: all 0.5s ease;
+   z-index: 1000;
+ }
+
+ .sidebar.close~.navbars,
+ .sidebar.close~.main {
+   left: 0;
+   width: 100%;
+ }
+
+ .navbars #sidebar-close {
+   cursor: pointer;
+ }
+
+ .right_area {
+   float: right;
+ }
+
+ /* Dashboard Style */
+
+
+ .main h1 {
+   color: #11101d;
+   font-size: 40px;
+ }
+
+ .main {
+   position: fixed;
+   height: 100vh;
+   z-index: 100;
+   overflow-y: scroll;
+   background-color: white;
+ }
+
+ .main::-webkit-scrollbar {
+   display: none;
+ }
+
+ .content-header {
+   padding: 1rem 20px;
+   display: flex;
+   background-color: #ddd;
+   box-shadow: azure;
+   justify-content: start;
+   align-items: center;
+ }
+
+ .breadcrumb-iterm .active {
+   color: black;
+   font-weight: 700;
+   margin-left: 4px;
+   text-decoration: none;
+ }
+
+
+ .form-label {
+   font-weight: 800;
+   font-size: 18px;
+ }
+
+
+ /* Card Style */
+
+  .radius-10 {
+      border-radius: 10px !important;
+  }
+  
+  .border-info {
+      border-left: 5px solid  #0dcaf0 !important;
+  }
+  .border-danger {
+      border-left: 5px solid  #fd3550 !important;
+  }
+  .border-success {
+      border-left: 5px solid  #15ca20 !important;
+  }
+  .border-warning {
+      border-left: 5px solid  #ffc107 !important;
+  }
+  
+  
+  .card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      word-wrap: break-word;
+      background-color: #fff;
+      background-clip: border-box;
+      border: 0px solid rgba(0, 0, 0, 0);
+      border-radius: .25rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 2px 6px 0 rgb(218 218 253 / 65%), 0 2px 6px 0 rgb(206 206 238 / 54%);
+  }
+  .bg-gradient-scooter {
+      background: #17ead9;
+      background: -webkit-linear-gradient( 
+  45deg
+   , #17ead9, #6078ea)!important;
+      background: linear-gradient( 
+  45deg
+   , #17ead9, #6078ea)!important;
+  }
+  .widgets-icons-2 {
+      width: 56px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #ededed;
+      font-size: 27px;
+      border-radius: 10px;
+  }
+  .rounded-circle {
+      border-radius: 50%!important;
+  }
+  .text-white {
+      color: #fff!important;
+  }
+  .ms-auto {
+      margin-left: auto!important;
+  }
+  .bg-gradient-bloody {
+      background: #f54ea2;
+      background: -webkit-linear-gradient( 
+  45deg
+   , #f54ea2, #ff7676)!important;
+      background: linear-gradient( 
+  45deg
+   , #f54ea2, #ff7676)!important;
+  }
+  
+  .bg-gradient-ohhappiness {
+      background: #00b09b;
+      background: -webkit-linear-gradient( 
+  45deg
+   , #00b09b, #96c93d)!important;
+      background: linear-gradient( 
+  45deg
+   , #00b09b, #96c93d)!important;
+  }
+  
+  .bg-gradient-blooker {
+      background: #ffdf40; 
+      background: #2aec2a;
+      background: -webkit-linear-gradient( 
+  45deg
+   , #ffdf40, #ff8359)!important;
+      background: linear-gradient( 
+  45deg
+   , #ffdf40, #ff8359)!important;
+  }
+ 
+
+
+ /* Channel Info styles */
+
+ .channel_info {
+   display: flex;
+   flex-direction: column;
+   /* justify-content: left; */
+   /* align-items: center; */
+ }
+
+ .channel_info .profile_images {
+   width: 150px;
+   height: 150px;
+   border-radius: 100px;
+   margin-bottom: 10px;
+ }
+
+
+
+
+ .table tr td:contains("Active"){
+  background-color: #00FF00;
+  color: #00FF00;
+ }
+
+ /* This is for Toast */
+
+
+ .toast-success-inside{
+  margin-top: 80px;
+  height: 80px;
+ }
+
+ .toast-success{
+  height: 80px;
+ }
+
+
+
+ /* manage channals */
+
+ .table-image{
+  width: 50px;
+  height: 50px;
+  border-radius: 100px;
+  margin-bottom: 10px;
+  margin-left: 20px;
+ }
+
+
+ .customer_images{
+  width: 180px;
+  height: 180px;
+  border-radius: 100px;
+  margin-bottom: 30px;
+ }
+
+
+ /*  my card Customer */
+
+
+ * {
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
+     font-family: sans-serif;
+ }
+ 
+ 
+ h4 {
+     margin: 10px 0;
+ }
+ 
+ h5 {
+     margin: 5px 0;
+     color: #1f1a35;
+     font-weight: 900;
+     /* text-transform: uppercase; */
+ }
+ 
+ p {
+     font-size: 14px;
+     color: #1f1a35;
+     line-height: 20px;
+ }
+ 
+ .containers {
+     width: 300px;
+     margin: 1rem;
+     margin-left: 180px;
+     color: #e65b00;
+     padding-top: 30px;
+     border-radius: 5px;
+     position: relative;
+     text-align: center;
+     border-radius: 10px;
+     box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.80);
+ }
+ 
+ .round {
+     width: 50px;
+     height: 180px;
+     border-radius: 23%;
+     border: 1px solid #fefefe;
+     box-shadow: 5px 5px 20px #c6c6c6;
+ }
+
+ .card-img-top{
+  width: 140px;
+  height: 200px;
+  border-radius: 10px;
+  margin-top: 0px;
+  /* margin-bottom: 10px; */
+
+ }
+ 
+ .main-btn {
+     color: #fff;
+     cursor: pointer;
+     margin-top: 1rem;
+     padding: 10px 25px;
+     background-color: #e65b00;
+     border: 1px solid #e65b00;
+ }
+ 
+ .main-btn.secondary {
+     cursor: pointer;
+     color: #1f1a35;
+     background-color: transparent;
+ }
+ 
+ .main-btn.secondary:hover {
+     color: #fff;
+     background-color: #e65b00;
+ }
+ 
+ .skills {
+     padding: 1rem;
+     margin-top: 2rem;
+     text-align: left;
+     background-color: #1F1A36;
+     border-radius: 0px 0px 10px 10px;
+ }
+ 
+ .skills h5 {
+     color: #fff;
+     margin-bottom: 15px;
+ }
+ 
+ hr {
+     height: 0.5px;
+     margin: 10px 0;
+     background-color: #fff;
+ }
+ 
+ .skills ul li {
+     color: #fff;
+     padding: 7px;
+     font-size: 12px;
+     margin: 0 7px 7px 0;
+     display: inline-block;
+     border: 1px solid #b7b6be;
+ }
+
+
+ .container-fluid {
+  max-width: 100%;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.status{
+  font-weight: bold;
+  color:crimson;
+}
+
+
+.bg{
+  /* background: #e5eae9; */
+  /* background: #ece5e9; */
+  background: rgb(240, 242, 244);
+
+}
+
+
+.media-line{
+  color: crimson;
+  height: 20px;
 }
