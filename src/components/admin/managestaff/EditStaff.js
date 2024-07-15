@@ -10,7 +10,7 @@ export const EditStaff = () => {
     const [email, setEmail] = useState('');
     const [phonenumber, setPhonenumber] = useState('');
     const [media, setMedia] = useState('');
-    const [status, setStatus] = useState('');
+    const [account_status, setStatus] = useState('');
     const [password, setPassword] = useState('');
     const [massMediaChannel, setMassMediaChannel] = useState([]);
 
@@ -23,7 +23,7 @@ export const EditStaff = () => {
                 setEmail(staffData.email);
                 setPhonenumber(staffData.phonenumber);
                 setMedia(staffData.mediaChannel.mediaId); // Assuming mediaId is the identifier
-                setStatus(staffData.status);
+                setStatus(staffData.account_status);
             });
 
         // Fetch media channels
@@ -43,10 +43,11 @@ export const EditStaff = () => {
             email,
             // phonenumber,
             role: 'Staff',
+            account_status: account_status,
             mediaChannel: {
                 mediaId: parseInt(media),
             },
-            status,
+           
         };
     
         if (password) {
@@ -58,6 +59,7 @@ export const EditStaff = () => {
         axios.patch(`http://localhost:9000/api/staff/update/${userId}`, updatedStaff)
             .then(() => {
                 // navigate('/staff');
+                alert("Successfull Update")
             })
             .catch((error) => {
                 console.error('There was an error updating the staff!', error);
@@ -91,10 +93,14 @@ export const EditStaff = () => {
 
                     <div className='col-md-6'>
                         <label className='form-label'>Status</label>
-                        <select value={status} onChange={(e) => setStatus(e.target.value)} className='form-control'>
-                            <option value='Active'>Active</option>
-                            <option value='Inactive'>Inactive</option>
-                        </select>
+                        <select
+  className='form-control'
+  value={account_status}
+  onChange={(event) => setStatus(event.target.value)}
+>
+  <option value='Active'>Active</option>
+  <option value='Inactive'>Inactive</option>
+</select>
                     </div>
                 </div>
 

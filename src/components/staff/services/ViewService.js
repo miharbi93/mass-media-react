@@ -55,7 +55,7 @@ export const ViewService = () => {
 
             <button type='button' className='btn btn-primary mb-4 ms-5'>
                 Total Service
-                <span className='badge bg-secondary'>45</span>
+                <span className='badge bg-danger'> {data.length}</span>
             </button>
     </nav>
 
@@ -71,9 +71,9 @@ export const ViewService = () => {
                     <th>Service No</th>
                     <th>Service Name</th>
                     <th>Service Description</th>
-                    <th>Service Duration</th>
+                    {/* <th>Service Duration</th> */}
                     <th>Service Price</th>
-                    <th>Service Status</th>
+                    {/* <th>Service Status</th> */}
                     <th>Actions</th>
                   </tr>
             </thead>
@@ -83,13 +83,13 @@ export const ViewService = () => {
                         <td>{index + 1}</td>
                         <td>{item.serviceName}</td>
                         <td>{item.serviceDescription}</td>
-                        <td>2 Days</td>
+                        {/* <td>2 Days</td> */}
                         <td>{item.servicePrice}</td>
-                        <td>{item.serviceStatus}</td>
+                        {/* <td>{item.serviceStatus}</td> */}
                         <td>
-                            <Link to='edit-service' className='btn btn-outline-success'><i className='fa fa-edit'> </i></Link>
+                            <Link to={`edit-service/${item.serviceId}`} className='btn btn-outline-success'><i className='fa fa-edit'> Edit</i></Link>
                                 <button  onClick={() => handleDelete(item.serviceId)} className='btn btn-outline-danger ms-3'>
-                                    <i className='fa fa-trash'> </i>
+                                    <i className='fa fa-trash'> Delete </i>
                                 </button>
                         </td>
                     </tr>

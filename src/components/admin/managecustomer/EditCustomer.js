@@ -16,7 +16,7 @@ export const EditCustomer = () => {
   const [image, setImage] = useState('');
   const [existingImage, setExistingImage] = useState(null);
   const [role, setRole] = useState('Customer');
-  const [status, setStatus] = useState('Active');
+  const [account_status, setStatus] = useState('Active');
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -28,7 +28,7 @@ export const EditCustomer = () => {
       username,
       email,
       password: '',
-      status,
+      account_status: account_status,
       role,
     };
   
@@ -60,7 +60,7 @@ export const EditCustomer = () => {
       username,
       email,
       password: defaultPassword,
-      status,
+      account_status,
       role,
     };
 
@@ -92,7 +92,7 @@ export const EditCustomer = () => {
         setUsername(response.data.username);
         setEmail(response.data.email);
         setRole(response.data.role);
-        setStatus(response.data.status);
+        setStatus(response.data.account_status);
         setExistingImage(response.data.image); // set existing image
       })
   }, [userId]);
@@ -141,7 +141,7 @@ export const EditCustomer = () => {
             <p className='form-label'>Status</p>
             <select
               className='form-control'
-              value={status}
+              value={account_status}
               onChange={(event) => setStatus(event.target.value)}
             >
               <option value='Active'>Active</option>

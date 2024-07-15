@@ -47,91 +47,103 @@ export const ViewChannels = () => {
         }
     }
 
-  return (
-    <>
-    <h5 className='fw-bold mb-5 text-uppercase'>Manage Mass Media Channel </h5>
-    <nav>
-        <Link to='new-channel'>
-            <button className='btn btn-outline-success mb-4'>
-                <i className='fa fa-plus'> </i> <label> New Channel</label>
-            </button>
-        </Link>
+    return (
+        <>
+          <h5 className='fw-bold mb-5 text-uppercase'>Manage Mass Media Channel </h5>
+          <nav>
+              <Link to='new-channel'>
+                  <button className='btn btn-outline-success mb-4'>
+                      <i className='fa fa-plus'> </i> <label> New Channel</label>
+                  </button>
+              </Link>
+      
+              <button type='button' className='btn btn-outline-info mb-4 ms-5'>
+                  Total Channel
+                  <span className='badge bg-danger ms-2'> {countChannel}</span>
+              </button>
+          </nav>
+      
+          <div className='table-responsive mt-2'>
+              <ToastContainer/>
+              {data.length === 0? (
+                // <div className='card mt-4'>
+                //   <div className='card-body'>
+                //     <h5 className='card-title'>No Media Found</h5>
+                //     <p className='card-text'>No media channels are available.</p>
+                //   </div>
+                // </div>
 
-        <button type='button' className='btn btn-outline-info mb-4 ms-5'>
-            Total Channel
-            <span className='badge bg-danger ms-2'> {countChannel}</span>
-        </button>
-    </nav>
-
-    <div className='table-responsive mt-2'>
-        <ToastContainer/>
-        <table className=' table table-hover table-bordered'>
-            <thead>
-                <tr>
-                    <th className='text-center '>Media Logo</th>
-                    <th className='text-center'>Media No </th>
-                    <th className='text-center'>Media Name</th>
-                    <th className='text-center'>Media Type</th>
-                    <th className='text-center'>Media Email</th>
-                    {/* <th className='text-center'>Media WebUrl</th> */}
-                    <th className='text-center'>Created Date</th>
-                    <th className='text-center'>Status</th>
-                    <th className='text-center'>Action</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                {data.map((item,index)=>(
-                    <tr key={item.mediaId}>
-                    <td className='p-1'>
-                        <img className='table-image' src={`data:image/png;base64,${item.image}`}/>
-                    </td>
-                    <td className='p-4'>{item.mediaId}</td>
-                    <td className='p-4'>{item.mediaName}</td>
-                    <td className='p-4'>{item.mediaType}</td>
-                    <td className='p-4'>{item.mediaEmail}</td>
-                    {/* <td className='p-4'>{item.mediaWebUrl}</td> */}
-                    <td className='p-4'>{item.createdDate}</td>
-                    <td className='p-4'>{item.status === 'Open' ? (
-                        <span
+                <div class="alert alert-warning  alert-dismissible fade show">
+                    <strong>
+                        <i className='fa fa-warning'> </i> Warning!
+                    </strong> No Media Found
+                    <p className='mt-4'>No media channels are available.</p>
+                </div>
+              ) : (
+                <table className='table table-hover table-bordered'>
+                  <thead>
+                    <tr>
+                      <th className='text-center '>Media Logo</th>
+                      <th className='text-center'>Media No </th>
+                      <th className='text-center'>Media Name</th>
+                      <th className='text-center'>Media Type</th>
+                      <th className='text-center'>Media Email</th>
+                      {/* <th className='text-center'>Media WebUrl</th> */}
+                      <th className='text-center'>Created Date</th>
+                      <th className='text-center'>Status</th>
+                      <th className='text-center'>Action</th>
+                    </tr>
+                  </thead>
+      
+                  <tbody>
+                    {data.map((item, index) => (
+                      <tr key={item.mediaId}>
+                        <td className='p-1'>
+                          <img className='table-image' src={`data:image/png;base64,${item.image}`}/>
+                        </td>
+                        <td className='p-4'>{item.mediaId}</td>
+                        <td className='p-4'>{item.mediaName}</td>
+                        <td className='p-4'>{item.mediaType}</td>
+                        <td className='p-4'>{item.mediaEmail}</td>
+                        {/* <td className='p-4'>{item.mediaWebUrl}</td> */}
+                        <td className='p-4'>{item.createdDate}</td>
+                        <td className='p-4'>{item.status === 'Open'? (
+                          <span
                             style={{
-                                backgroundColor: '#00FF7F',
-                                padding: '3px 15px',
-                                borderRadius: '5px',
-                                color: 'black',
-
+                              backgroundColor: '#00FF7F',
+                              padding: '3px 15px',
+                              borderRadius: '5px',
+                              color: 'black',
                             }}>
-                                {item.status}
-                        </span>
-                    ):(
-                        <span
+                            {item.status}
+                          </span>
+                        ) : (
+                          <span
                             style={{
-                                backgroundColor: '#FF0000',
-                                padding: '3px 10px',
-                                borderRadius: '5px',
-                                color: '#FFFFFF',
-
+                              backgroundColor: '#FF0000',
+                              padding: '3px 10px',
+                              borderRadius: '5px',
+                              color: '#FFFFFF',
                             }}>
-                                {item.status}
-                        </span>
-
-                    )}</td>
-                    <td className='p-4'>
-
-                        <Link to={`edit-channel/${item.mediaId}`} className='btn btn-outline-success '>
+                            {item.status}
+                          </span>
+                        )}</td>
+                        <td className='p-4'>
+                          <Link to={`edit-channel/${item.mediaId}`} className='btn btn-outline-success '>
                             <i className='fa fa-edit'> Edit</i>
-                        </Link>
-
-                        <button onClick={() => handleDelete(item.mediaId)} className='btn btn-outline-danger ms-3'>
+                          </Link>
+      
+                          <button onClick={() => handleDelete(item.mediaId)} className='btn btn-outline-danger ms-3'>
                             <i className='fa fa-trash'> Delete</i>
-                        </button>
-                    </td>
-                </tr>
-                ))}
-            </tbody>
-        </table>
-        
-    </div>
-    </>
-  )
-}
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
+          </div>
+        </>
+      )
+
+    }

@@ -44,61 +44,76 @@ export const ViewCustomer = () => {
     }
 
 }
-
-  return (
+return (
     <>
-    <h5 className='fw-bold mb-5 text-uppercase'>Manage Mass Media Customer </h5><nav>
-        <Link to='new-customer'>
-            <button className='btn btn-outline-success mb-4'>
-                <i className='fa fa-plus'> </i> <label> New Customer</label>
-            </button>
-        </Link>
-
-        <button type='button' className='btn btn-outline-primary mb-4 ms-5'>
-            Total Customer
-            <span className='badge bg-danger ms-2'> {countCustomer}</span>
-        </button>
+      <h5 className='fw-bold mb-5 text-uppercase'>Manage Mass Media Customer </h5>
+      <nav>
+          <Link to='new-customer'>
+              <button className='btn btn-outline-success mb-4'>
+                  <i className='fa fa-plus'> </i> <label> New Customer</label>
+              </button>
+          </Link>
+  
+          <button type='button' className='btn btn-outline-primary mb-4 ms-5'>
+              Total Customer
+              <span className='badge bg-danger ms-2'> {countCustomer}</span>
+          </button>
       </nav>
-        <div className='table-responsive mb-4'>
-            <ToastContainer/>
+  
+      <div className='table-responsive mb-4'>
+          <ToastContainer/>
+          {data.length === 0 ? (
+            // <div className='card mt-4'>
+            //   <div className='card-body'>
+            //     <h5 className='card-title'>No Customers Found</h5>
+            //     <p className='card-text'>No customers are available.</p>
+            //   </div>
+            // </div>
+
+            <div class="alert alert-warning  alert-dismissible fade show">
+                <strong>
+                    <i className='fa fa-warning'> </i> Warning!
+                </strong> No Customer Found
+                <p className='mt-4'>No customers are available.</p>
+            </div>
+          ) : (
             <table className='table table-hover table-bordered'>
-                <thead>
-                    <tr>
-                        <th className='text-center'>Customer ID</th>
-                        <th className='text-center'>Image</th>
-                        <th className='text-center'>Name</th>
-                        <th className='text-center'>Email</th>
-                        <th className='text-center'>Created Date</th>
-                        <th className='text-center'>Status</th>
-                        <th className='text-center'>Action</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    {data.map((item,index) =>(
-                        <tr key={item.userId}>
-                            <td className='p-4'>{index + 1}</td>
-                            <td className='p-3'>
-                                <img className='table-image' src={`data:image/png;base64,${item.customerImage}`} />
-                            </td>
-                            <td className='p-4'>{item.username}</td>
-                            <td className='p-4'>{item.email}</td>
-                            <td className='p-4'>{item.createdDate}</td>
-                            <td className='p-4'>{item.status}</td>
-                            <td className='p-4'>
-                                <Link to={`edit-customer/${item.userId}`} className='btn btn-outline-success'>
-                                    <i className='fa fa-edit'> </i> Edit</Link>
-                                <button onClick={() => handleDelete(item.userId) } className='btn btn-outline-danger ms-3'>
-                                    <i className='fa fa-trash'> </i> Delete</button>
-                            </td>
-                        </tr>
-
-                    ))}
-                    
-                </tbody>
+              <thead>
+                <tr>
+                  <th className='text-center'>Customer ID</th>
+                  <th className='text-center'>Image</th>
+                  <th className='text-center'>Name</th>
+                  <th className='text-center'>Email</th>
+                  <th className='text-center'>Created Date</th>
+                  <th className='text-center'>Status</th>
+                  <th className='text-center'>Action</th>
+                </tr>
+              </thead>
+  
+              <tbody>
+                {data.map((item, index) => (
+                  <tr key={item.userId}>
+                    <td className='p-4'>{index + 1}</td>
+                    <td className='p-3'>
+                      <img className='table-image' src={`data:image/png;base64,${item.customerImage}`} />
+                    </td>
+                    <td className='p-4'>{item.username}</td>
+                    <td className='p-4'>{item.email}</td>
+                    <td className='p-4'>{item.createdDate}</td>
+                    <td className='p-4'>{item.account_status}</td>
+                    <td className='p-4'>
+                      <Link to={`edit-customer/${item.userId}`} className='btn btn-outline-success'>
+                        <i className='fa fa-edit'> </i> Edit</Link>
+                      <button onClick={() => handleDelete(item.userId) } className='btn btn-outline-danger ms-3'>
+                        <i className='fa fa-trash'> </i> Delete</button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
             </table>
-
-        </div>
-        </>
+          )}
+      </div>
+    </>
   )
+
 }

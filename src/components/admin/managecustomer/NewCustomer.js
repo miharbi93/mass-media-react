@@ -10,7 +10,7 @@ export const NewCustomer = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [image, setImage] = useState(null);
   const [role, setRole] = useState('Customer');
-  const [status, setStatus] = useState('Active'); // add a new state for status with default value 'Active'
+  const [account_status, setStatus] = useState('Active'); // add a new state for status with default value 'Active'
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -18,7 +18,7 @@ export const NewCustomer = () => {
       username,
       email,
       password,
-      status,
+      account_status,
       role,
     };
 

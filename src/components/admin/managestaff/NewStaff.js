@@ -33,18 +33,18 @@ export const NewStaff = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
   
-    const updatedStaff = {
+    const newStaff = {
       username: fullname,
       email: email,
       password: password,
       role: 'Staff',
-      status: 'Active',
+      account_status: 'Active',
       mediaChannel: {
         mediaId: massMediaId,
       },
     };
   
-    axios.patch(`http://localhost:9000/api/staff/update/${userId}`, updatedStaff)
+    axios.post('http://localhost:9000/api/staff/add', newStaff)
      .then((response) => {
         // console.log(response);
         toast.success("Staff updated successfully", {

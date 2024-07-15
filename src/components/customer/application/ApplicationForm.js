@@ -1,183 +1,154 @@
-import React, { useState } from 'react'
-import { Navigation } from '../../navigation/Navigation'
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 export const ApplicationForm = () => {
- 
+  const [customerId, setCustomerId] = useState('');
+  const [serviceId, setServiceId] = useState('');
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [advertiseDocument, setAdvertiseDocument] = useState(null);
+  const [uthibitishoDocument, setUthibitishoDocument] = useState(null);
+  const [mediaService, setMediaService] = useState([]);
+  const navigate = useNavigate();
+  const { mediaId } = useParams();
 
-const [customerId, setCustomerId] = useState('');
+  const userId = parseInt(localStorage.getItem('userId'));
 
-const [serviceId, setServiceId] = useState('');
+  useEffect(() => {
+    axios.get(`http://localhost:9000/api/services/mediaId/${mediaId}`)
+      .then((response) => {
+        console.log(response.data);
+        setMediaService(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching media services:', error);
+      });
+  }, [mediaId]);
 
-const [startDate, setStartDate] = useState('');
+  const handleFileChange = (setter) => (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      console.log(`Selected file: ${file.name}`);
+    } else {
+      console.log('No file selected');
+    }
+    setter(file);
+  };
 
-const [endDate, setEndDate] = useState('');
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append('customerId', userId);
+    formData.append('serviceId', serviceId);
+    formData.append('startDate', startDate);
+    formData.append('endDate', endDate);
+    if (advertiseDocument) {
+      formData.append('advertiseDocument', advertiseDocument);
+    } else {
+      console.error('advertiseDocument is null');
+    }
+    if (uthibitishoDocument) {
+      formData.append('uthibitishoDocument', uthibitishoDocument);
+    } else {
+      console.error('uthibitishoDocument is null');
+    }
 
-const [advertiseDocument, setAdvertiseDocument] = useState(null);
+    try {
+      const response = await axios.post('http://localhost:9000/api/applications/apply', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      console.log(response.data);
+      alert("Successful");
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      alert("There was an error submitting the form");
+    }
+  };
 
-const [uthibitishoDocument, setUthibitishoDocument] = useState(null);
+  return (
+    <form onSubmit={handleSubmit}>
+      <h5 className='fw-bold mb-2 text-uppercase'>Application Form Media ID = {mediaId}</h5>
+      <p className='mb-5'>Fill all required information</p>
 
-
-const handleSubmit = async (e) => {
-
-  e.preventDefault();
-
-
-  const formData = new FormData();
-
-  formData.append('customerId', customerId);
-
-  formData.append('serviceId', serviceId);
-
-  formData.append('startDate', startDate);
-
-  formData.append('endDate', endDate);
-
-  formData.append('advertiseDocument', advertiseDocument);
-
-  formData.append('uthibitishoDocument', uthibitishoDocument);
-
-
-  try {
-
-    const response = await axios.post('http://localhost:9000/api/applications/apply', formData, {
-
-      headers: {
-
-        'Content-Type': 'multipart/form-data',
-
-      },
-
-    });
-
-    console.log(response.data);
-
-    // Handle success
-
-  } catch (error) {
-
-    console.error(error);
-
-    // Handle error
-
-  }
-
+      <div className='row'>
+        <div className='row mb-5'>
+          <div className='col-md-6'>
+            <label className='form-label' htmlFor="customerId">Customer ID:</label>
+            <input className='form-control'
+              type="text"
+              id="customerId"
+              value={userId} 
+              onChange={(e) => setCustomerId(e.target.value)}
+            />
+          </div>
+          <div className='col-md-6'>
+            <label className='form-label' htmlFor="serviceId">Select Service</label>
+            <select className='form-select' value={serviceId} onChange={(event) => setServiceId(event.target.value)}>
+              <option value="">None</option>
+              {mediaService.map((service) => (
+                <option key={service.serviceId} value={service.serviceId}>
+                  {service.serviceName}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+        <div className='row mb-5'>
+          <div className='col-md-6'>
+            <label className='form-label' htmlFor="startDate">Start Date:</label>
+            <input className='form-control'
+              type="date"
+              id="startDate"
+              value={startDate}
+              onChange={(e) => setStartDate(e.target.value)}
+            />
+          </div>
+          <div className='col-md-6'>
+            <label className='form-label' htmlFor="endDate">End Date:</label>
+            <input className='form-control'
+              type="date"
+              id="endDate"
+              value={endDate}
+              onChange={(e) => setEndDate(e.target.value)}
+            />
+          </div>
+        </div>
+        <div className='row mb-4'>
+          <div className='col-md-6'>
+            <label className='form-label' htmlFor="advertiseDocument">Advertise Document:</label>
+            <input className='form-control'
+              type="file"
+              id="advertiseDocument"
+              onChange={(e) => {
+                console.log(`Advertise Document Change: ${e.target.files.length}`);
+                handleFileChange(setAdvertiseDocument)(e);
+              }}
+            />
+          </div>
+          <div className='col-md-6'>
+            <label className='form-label' htmlFor="uthibitishoDocument">Uthibitisho Document:</label>
+            <input className='form-control'
+              type="file"
+              id="uthibitishoDocument"
+              onChange={(e) => {
+                console.log(`Uthibitisho Document Change: ${e.target.files.length}`);
+                handleFileChange(setUthibitishoDocument)(e);
+              }}
+            />
+          </div>
+        </div>
+        <div className='row mt-5 mb-3'>
+          <div className='col-md-6'>
+            <button className='btn btn-primary w-50' type="submit">Submit</button>
+          </div>
+          <div className='col-md-6'>
+            <button className='btn btn-danger w-50' onClick={() => navigate(-1)} type="button">Back</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  );
 };
-
-
-return (
-
-  <form onSubmit={handleSubmit}>
-
-    <div>
-
-      <label htmlFor="customerId">Customer ID:</label>
-
-      <input
-
-        type="text"
-
-        id="customerId"
-
-        value={customerId}
-
-        onChange={(e) => setCustomerId(e.target.value)}
-
-      />
-
-    </div>
-
-    <div>
-
-      <label htmlFor="serviceId">Service ID:</label>
-
-      <input
-
-        type="text"
-
-        id="serviceId"
-
-        value={serviceId}
-
-        onChange={(e) => setServiceId(e.target.value)}
-
-      />
-
-    </div>
-
-    <div>
-
-      <label htmlFor="startDate">Start Date:</label>
-
-      <input
-
-        type="date"
-
-        id="startDate"
-
-        value={startDate}
-
-        onChange={(e) => setStartDate(e.target.value)}
-
-      />
-
-    </div>
-
-    <div>
-
-      <label htmlFor="endDate">End Date:</label>
-
-      <input
-
-        type="date"
-
-        id="endDate"
-
-        value={endDate}
-
-        onChange={(e) => setEndDate(e.target.value)}
-
-      />
-
-    </div>
-
-    <div>
-
-      <label htmlFor="advertiseDocument">Advertise Document:</label>
-
-      <input
-
-        type="file"
-
-        id="advertiseDocument"
-
-        onChange={(e) => setAdvertiseDocument(e.target.files[0])}
-
-      />
-
-    </div>
-
-    <div>
-
-      <label htmlFor="uthibitishoDocument">Uthibitisho Document:</label>
-
-      <input
-
-        type="file"
-
-        id="uthibitishoDocument"
-
-        onChange={(e) => setUthibitishoDocument(e.target.files[0])}
-
-      />
-
-    </div>
-
-    <button type="submit">Submit</button>
-
-  </form>
-
-);
-
-}
-

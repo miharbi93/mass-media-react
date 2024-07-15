@@ -33,7 +33,7 @@ const links = {
     Customer:[
         {label:'Dashboard', path:'/dashboard', icon: 'dashboard'},
 
-        {label: 'Application Form', path:'/apply', icon:'th-list'},
+        // {label: 'Application Form', path:'/apply', icon:'th-list'},
 
         {label: 'My Applications ', path:'/application-list', icon:'inbox'},
 

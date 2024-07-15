@@ -81,6 +81,7 @@ export const Login = () => {
           localStorage.setItem('name',userData.username);
           localStorage.setItem('image',userData.customerImage)
           localStorage.setItem('userRole', userData.role);
+          localStorage.setItem('userId', userData.userId);
 
           setTimeout(()=>{
             navigate('/dashboard',{

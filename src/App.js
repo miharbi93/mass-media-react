@@ -88,7 +88,7 @@ function App() {
 
             <Route index element={<ViewService/>} />
             <Route path='view-service' element={<ViewService/>} />
-            <Route path='edit-service' element={<EditService/>} />
+            <Route path='edit-service/:serviceId' element={<EditService/>} />
             <Route path='new-service' element={<NewService/>} />
         
         </Route>
@@ -111,7 +111,7 @@ function App() {
 
         <Route path='/dashboard' element={<CustomerDashboard/>} />
 
-        <Route path='apply' element={<Application/>}>
+        <Route path='apply/:mediaId' element={<Application/>}>
           <Route index element={<ApplicationForm/>}/>
           <Route path='application-form' element={<ApplicationForm/>} />
         </Route>
