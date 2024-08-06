@@ -469,3 +469,77 @@
   color: crimson;
   height: 20px;
 }
+
+
+
+
+/*   PDF STYLE */
+
+
+.containers {
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+  background-color:rgb(247, 241, 233);
+}
+
+.invoice {
+  border: 1px solid #ccc;
+  padding: 20px;
+}
+
+.header {
+  /* text-align: center; */
+  margin-bottom: 20px;
+}
+
+.bill-details {
+  display: flex;
+  justify-content:space-between;
+  margin-bottom: 20px;
+}
+
+.bill-to,
+.bill-number,
+.site-address {
+  width: 30%;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.table th,
+.table td {
+  padding: 10px;
+  border: 1px solid #ccc;
+  text-align: left;
+}
+
+/* .totals {
+  display:inline;
+  justify-content: space-between;
+} */
+
+.subtotal,
+.tax,
+.total {
+  width: 30%;
+  text-align: left;
+}
+
+.par , .invoice-span{
+  /* font-weight: bold; */
+  padding: 0;
+  font-size: 16px;
+  display:flex;
+  justify-content:flex-start
+}
+
+.invoice-span{
+  margin-right: 10px;
+  font-weight: bold;
+}
+

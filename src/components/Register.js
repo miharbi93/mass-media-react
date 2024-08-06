@@ -1,7 +1,56 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
+import React, { useState } from 'react'
+import { NavLink, useNavigate } from 'react-router-dom'
 
 export const Register = () => {
+
+  const navigate = useNavigate();
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [image, setImage] = useState(null);
+  const [role, setRole] = useState('Customer');
+  const [account_status, setStatus] = useState('Active'); // add a new state for status with default value 'Active'
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const customer = {
+      username,
+      email,
+      password,
+      account_status,
+      role,
+    };
+
+    const formData = new FormData();
+    formData.append('customer', JSON.stringify(customer));
+    formData.append('image', image, 'image'); // specify the name attribute as 'image'
+
+    console.log('Form data:', formData);
+
+    // if(password === confirmPassword){
+
+    try {
+      
+        const response = await fetch('http://localhost:9000/api/customer/add', {
+          method: 'POST',
+          body: formData,
+        });
+    
+
+      if (response.ok) {
+        // navigate(-1); // redirect to customers list page
+        alert("Created Successfull")
+      } else {
+        console.error('Error creating customer:', response.status);
+      }
+    } catch (error) {
+      console.error('Error creating customer:', error);
+    }
+  }
+  // } }else{
+  //   alert("Password does not match");
+  // }
   return (
     <div class="bg-light py-md-5 vh-100">
       <div class="container">
@@ -15,7 +64,7 @@ export const Register = () => {
                   </div>
                 </div>
               </div>
-              <form action="#!">
+              <form onSubmit={handleSubmit}>
               <div className="row gy-3 gy-md-4 overflow-hidden">
                 <div className='mt-5'>
                     <div className='row'>
@@ -23,31 +72,38 @@ export const Register = () => {
                         <div className='col-6'>
                             <p  className="mb-1 form-label">Fullname</p>
                             <div className="input-group mb-4">
-                                <input type="text" className="form-control" placeholder="Fullname" />
+                                <input type="text" 
+                                className="form-control" 
+                                placeholder="Ex. Miharbi Rajab"
+                                value={username}
+                                onChange={(event) => setUsername(event.target.value)} />
                             </div>
                         </div>
 
                         <div className='col-6'>
                             <p className='mb-1 form-label'>Email</p>
                             <div className='input-group mb-4'>
-                                <input type='email' className='form-control' placeholder='Email' />
+                                <input type='email' 
+                                className='form-control' 
+                                placeholder='Email'
+                                value={email}
+                                onChange={(event) => setEmail(event.target.value)} />
                             </div>
                         </div>
 
                     </div>
 
                     <div className='row'>
-                        <div className='col-6'>
-                            <p className='mb-1 form-label'>Address</p>
+                        <div className='col-12'>
+                            <p className='mb-1 form-label'> Customer Image</p>
                             <div className='input-group mb-4'>
-                                <input type='text' className='form-control' placeholder='Address' />
-                            </div>
-                        </div>
-
-                        <div className='col-6'>
-                            <p className='mb-1 form-label'>Phone</p>
-                            <div className='input-group mb-4'>
-                                <input type='number' className='form-control' placeholder='Phonenumber'/>
+                                <input type='file' 
+                                className='form-control mt-3' 
+                                placeholder='Address' 
+                                onChange={(event) => {
+                                  console.log('Image uploaded:', event.target.files[0]);
+                                  setImage(event.target.files[0]);
+                                }}/>
                             </div>
                         </div>
                     </div>
@@ -56,14 +112,23 @@ export const Register = () => {
                         <div className='col-6'>
                             <p className='mb-1 form-label'>Password</p>
                             <div className='input-group mb-4'>
-                                <input type='password' className='form-control' placeholder='Password' />
+                                <input type='password' 
+                                className='form-control' 
+                                placeholder='Password'
+                                value={password}
+                                onChange={(event) => setPassword(event.target.value)} />
                             </div>
                         </div>
 
                         <div className='col-6'>
                           <p className='mb-1 form-label'>Confirm Password</p>
                           <div className='input-group mb-4'>
-                            <input type='password' className='form-control' placeholder='Confirm Password' />
+                            <input type='password' 
+                            className='form-control' 
+                            placeholder='Confirm Password'
+                            value={confirmPassword}
+                            onChange={(event) => setConfirmPassword(event.target.value)}
+                            />
                           </div>
                         </div>
                     </div>

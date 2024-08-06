@@ -37,6 +37,10 @@ import { ApplicationForm } from './components/customer/application/ApplicationFo
 import { Application } from './components/customer/application/Application';
 import { ViewApplication } from './components/customer/viewapplication/ViewApplication';
 import { ViewApp } from './components/customer/viewapplication/ViewApp';
+import { Invoice } from './components/Invoice';
+import { Bill } from './components/customer/bill/Bill';
+import ViewBill from './components/customer/bill/ViewBill';
+import { GenerateBill } from './components/customer/bill/GenerateBill';
 
 
 
@@ -44,7 +48,7 @@ function App() {
   return (
     <Routes>
 
-        <Route path='/' element={<Login/>} />
+        <Route path='/' element={<Invoice/>} />
         <Route path='new-account' element={<Register/>} />
 
         {/* Admin */}
@@ -120,6 +124,12 @@ function App() {
           <Route index element={<ViewApplication/>}/>
           <Route path='/application-list' element={<ViewApplication/>}/>
 
+        </Route>
+
+        <Route path='/generate-bill' element={<Bill/>} >
+          <Route index element={<GenerateBill/>} />
+          <Route path='view-bill' element={<ViewBill/>} />
+        
         </Route>
 
 

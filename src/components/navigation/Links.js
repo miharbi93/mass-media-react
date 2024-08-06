@@ -37,9 +37,9 @@ const links = {
 
         {label: 'My Applications ', path:'/application-list', icon:'inbox'},
 
-        {label: 'Generate Invoice', path:'/invoice',  icon:'download'},
+        {label: 'Generate Bill', path:'/generate-bill',  icon:'download'},
 
-        {label: 'Payment Records', path:'/pay-records', icon:'gittip'},
+        // {label: 'Payment Records', path:'/pay-records', icon:'gittip'},
 
         {label: 'Account Settings', path:'account-setting', icon:'cogs'}
 
