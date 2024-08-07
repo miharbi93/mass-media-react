@@ -49,7 +49,7 @@ export const GenerateBill = () => {
     <h3 className="">Generate Bill</h3>
     <div className='col-md-4'>
     <div className="form-group">
-      <label htmlFor="applicationId">Select an application ID</label>
+      <label className='form-label'>Select an application ID</label>
       <select
         value={selectedApplicationId}
         onChange={handleApplicationIdChange}
