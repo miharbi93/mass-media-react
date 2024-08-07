@@ -48,7 +48,7 @@ function App() {
   return (
     <Routes>
 
-        <Route path='/' element={<Invoice/>} />
+        <Route path='/' element={<Login/>} />
         <Route path='new-account' element={<Register/>} />
 
         {/* Admin */}
