@@ -128,7 +128,7 @@ function App() {
 
         <Route path='/generate-bill' element={<Bill/>} >
           <Route index element={<GenerateBill/>} />
-          <Route path='view-bill' element={<ViewBill/>} />
+          <Route path='view-bill/:applicationId' element={<ViewBill/>} />
         
         </Route>
 

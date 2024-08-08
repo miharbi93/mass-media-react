@@ -543,3 +543,7 @@
   font-weight: bold;
 }
 
+.float-right {
+  float: left;
+}
+

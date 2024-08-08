@@ -7,7 +7,7 @@ export const Bill = () => {
     <div className='main mt-5'>
         <div className='content'>
             <div className='container-fluid mt-5'>
-                <div className='content-header mb-5'>
+                <div className='content-header mb-3'>
                   <nav aria-label='breadcrumb'>
                     <ol className='breadcrumb'>
 

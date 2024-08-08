@@ -4,8 +4,12 @@ import axios from 'axios';
 
 import Logo from '../../../channel 10.jpeg'
 import Logo2 from '../../../azam tv.jpeg'
+import { useNavigate, useParams } from 'react-router-dom';
 
 export const ViewBill = () => {
+
+  const navigate = useNavigate();
+
   const [invoiceData, setInvoiceData] = useState({
     businessName: "Your Business Name",
     streetAddress: "Street Address, City, ST ZIP Code",
@@ -22,8 +26,12 @@ export const ViewBill = () => {
   const [paymentData, setPaymentData] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const {applicationId} = useParams();
+
+  const appId = parseInt(applicationId);
+
   useEffect(() => {
-    axios.get(`http://localhost:9000/api/1`)
+    axios.get(`http://localhost:9000/api/${appId}`)
     .then(response => {
         console.log(response.data.email);
         setPaymentData(response.data);
@@ -86,14 +94,20 @@ export const ViewBill = () => {
   };
 
   return (
-    <div className="containers" style={{ padding: 20, maxWidth: 1500, margin: '10px auto' }}>
+    <div className="containers" style={{ padding: 20, maxWidth: 1500, maxHeight:800, margin: '10px auto' }}>
       <div className="invoice" style={{ padding: 20, border: '1px solid #ddd', borderRadius: 10, boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
         <div className="header mb-5">
           {/* <h1 style={{ fontSize: 24, marginBottom: 10 }}>{paymentData.application.mediaService.mediaChannel.mediaName}</h1> */}
           {/* <img className='profile_image' src={Logo}/> */}
+          <button onClick={() => navigate(-1)}
+            className='btn btn-danger float-right'>
+            <i class="fa fa-chevron-circle-left" > </i>
+             Back</button>
           <p style={{ fontSize: 25, marginBottom: 10, marginTop:20, fontWeight:"bold" }}>
             {paymentData.application.mediaService.mediaChannel.mediaName} Bill Summary Report
           </p>
+
+         {/* <button className='btn btn-danger float-right'>Back</button> */}
           {/* <p style={{ fontSize: 14, marginBottom: 10 }}>{invoiceData.city}</p> */}
         </div>
         <div className="bill-details">
@@ -144,8 +158,11 @@ export const ViewBill = () => {
                 <th style={{ fontSize: 15, padding: 10, borderBottom: '1px solid #ddd' }}>End Date</th>
                 <th style={{ fontSize: 15, padding: 10, borderBottom: '1px solid #ddd' }}>Total Days</th>
                 <th style={{ fontSize: 15, padding: 10, borderBottom: '1px solid #ddd' }}>Unit Price</th>
-                <th style={{ fontSize: 15, padding: 10, borderBottom: '1px solid #ddd' }}>Review Status</th>
+                {/* <th style={{ fontSize: 15, padding: 10, borderBottom: '1px solid #ddd' }}>Review Status</th> */}
                 <th style={{ fontSize: 15, padding: 10, borderBottom: '1px solid #ddd' }}>Paid Amount</th>
+                <th style={{ fontSize: 15, padding: 10, borderBottom: '1px solid #ddd' }}>Remain Balance</th>
+                <th style={{ fontSize: 15, padding: 10, borderBottom: '1px solid #ddd' }}>Payment Status</th>
+
               </tr>
             </thead>
             <tbody>
@@ -156,17 +173,30 @@ export const ViewBill = () => {
                 <td style={{ fontSize: 13, padding: 10, borderBottom: '1px solid #ddd' }}>{paymentData.application.endDate}</td>
                 <td style={{ fontSize: 13, padding: 10, borderBottom: '1px solid #ddd' }}>{paymentData.application.dayPackage.toString()}</td>
                 <td style={{ fontSize: 13, padding: 10, borderBottom: '1px solid #ddd' }}> TZS {paymentData.application.mediaService.servicePrice}</td>
-                <td style={{ fontSize: 13, padding: 10, borderBottom: '1px solid #ddd' }}>{paymentData.application.reviewApplication.reviewStatus}</td>
+                {/* <td style={{ fontSize: 13, padding: 10, borderBottom: '1px solid #ddd' }}>{paymentData.application.reviewApplication.reviewStatus}</td> */}
                 <td style={{ fontSize: 13, padding: 10, borderBottom: '1px solid #ddd' }}> TZS {paymentData.paidAmount}</td>
+                <td style={{ fontSize: 13, padding: 10, borderBottom: '1px solid #ddd' }}> TZS {paymentData.application.amount - paymentData.paidAmount}</td>
+                {/* <td style={{ fontSize: 13, padding: 10, borderBottom: '1px solid #ddd' }}> TZS {paymentData.application.amount - paymentData.paidAmount}</td> */}
+                <td style={{ fontSize: 13, padding: 10, borderBottom: '1px solid #ddd' }}>
+                  {paymentData.application.amount - paymentData.paidAmount === 0 ? (
+                    <span style={{ color: 'green' }}>Complete</span>
+                  ) : (
+                    <span style={{ color: 'red' }}>Incomplete</span>
+                  )}
+                </td>
               </tr>
             </tbody>
           </table>
         </div>
-        <div className="subtotal mb-3 mt-5">
+        <div className="subtotal mb-3 mt-4">
           <p className='par'><span className='invoice-span'>Total:  </span>{paymentData.application.amount.toString()} TZS</p>
-          <button className='btn btn-primary mt-5  mb-4' onClick={generatePDF}>
+          
+          <button className='btn btn-primary mt-4  mb-2' onClick={generatePDF}>
             <i className='fa fa-download'> </i> Print Bill</button>
+            
         </div>
+        
+
         {/* <div className="generate-pdf">
           <button className='btn btn-primary mt-3 mb-4' onClick={generatePDF}>
             <i className='fa fa-download'> </i> Print Bill</button>
