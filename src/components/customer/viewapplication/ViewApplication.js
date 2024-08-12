@@ -1,6 +1,8 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { ToastContainer, toast, ToastPosition } from 'react-toastify';
+
 
 export const ViewApplication = () => {
   const [applications, setApplications] = useState([]);
@@ -29,7 +31,13 @@ export const ViewApplication = () => {
     axios.patch(`http://localhost:9000/api/review/applications/${applicationId}/cancel`)
       .then(response => {
         console.log(response.data);
-        setMessage('Application canceled successfully');
+        // setMessage('Application canceled successfully');
+        toast.success("Canceled successfully", {
+          className: "toast-success-inside",
+          position: "top-right", // or "top-left", "bottom-right", "bottom-left"
+          autoClose: 5000,
+        
+        });
         fetchApplications(); // Refetch applications after canceling
       })
       .catch(error => {
@@ -50,7 +58,14 @@ export const ViewApplication = () => {
         link.download = `${documentType}Document.pdf`;
         link.click();
         URL.revokeObjectURL(url);
-        setMessage('Document downloaded successfully');
+        // setMessage('Document downloaded successfully');
+        toast.success("Downloaded successfully", {
+          className: "toast-success-inside",
+          position: "top-right", // or "top-left", "bottom-right", "bottom-left"
+          autoClose: 5000,
+        
+        });
+        
       })
       .catch(error => {
         console.error(error);
@@ -61,12 +76,13 @@ export const ViewApplication = () => {
   return (
     <>
       <h5 className='fw-bold mb-5 text-uppercase'>Manage Application</h5>
+      <ToastContainer/>
 
-      {message && <div className="alert alert-info">{message}</div>}
+      {/* {message && <div className="alert alert-info">{message}</div>} */}
       {applications.length === 0 ? (
-        <div className="card bg-warning">
+        <div className="card alert alert-primary  alert-dismissible fade show">
           <div className="card-body">
-            <h5 className="card-title"><i className='fa fa-warning'> </i> {userID} No applications</h5>
+            <h5 className="card-title mb-5"><i className='fa fa-warning'> </i> {userID} No applications Found</h5>
             <p className="card-text">There are no applications to display.</p>
           </div>
         </div>
@@ -123,7 +139,7 @@ export const ViewApplication = () => {
                       <button
                         className='btn btn-outline-danger ms-2'
                         onClick={() => handleCancelApplication(application.applicationId)}
-                        disabled={application.reviewApplication.reviewStatus === 'Cancel'}
+                        disabled={application.reviewApplication.reviewStatus !== 'pending'}
                       >
                         <i className='fa fa-ban'></i> Cancel
                       </button>

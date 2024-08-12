@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
+import { ToastContainer, toast, ToastPosition } from 'react-toastify';
+
 
 export const Register = () => {
 
@@ -40,7 +42,22 @@ export const Register = () => {
 
       if (response.ok) {
         // navigate(-1); // redirect to customers list page
-        alert("Created Successfull")
+        // alert("Created Successfull")
+        toast.success("Created successfully", {
+          className: "toast-success",
+          position: "top-right", // or "top-left", "bottom-right", "bottom-left"
+          autoClose: 5000,
+        
+        });
+
+
+        setTimeout(()=>{
+
+          navigate('/',{
+            replace:true,
+            // state: { userRole: userData.role},
+          });
+        }, 5000);
       } else {
         console.error('Error creating customer:', response.status);
       }
@@ -53,6 +70,8 @@ export const Register = () => {
   // }
   return (
     <div class="bg-light py-md-5 vh-100">
+
+      <ToastContainer/>
       <div class="container">
         <div class="row justify-content-md-center">
           <div class="col-12 col-md-11 col-lg-8 col-xl-7 col-xxl-6">

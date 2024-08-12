@@ -31,7 +31,7 @@ export const ViewBill = () => {
   const appId = parseInt(applicationId);
 
   useEffect(() => {
-    axios.get(`http://localhost:9000/api/${appId}`)
+    axios.get(`http://localhost:9000/api/payment/${appId}`)
     .then(response => {
         console.log(response.data.email);
         setPaymentData(response.data);

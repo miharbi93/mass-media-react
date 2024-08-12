@@ -1,8 +1,72 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Navigation } from '../navigation/Navigation'
 import { NavLink } from 'react-router-dom'
+import axios from 'axios';
 
 export const Dashboard = () => {
+
+	const mediaId = parseInt(localStorage.getItem('mediaId'));
+
+	const [noOfApp, setNoOfApp]  = useState(0);
+
+	useEffect(()=>{
+		axios.get('http://localhost:9000/api/applications/applications')
+		.then((response)=>{
+			const filteredApp = response.data.filter(application => application.mediaId === mediaId);
+
+			// const f = response.data;
+			const totalApp = filteredApp.length;
+			setNoOfApp(totalApp);
+		}).catch((error) => {
+			console.error("Error Found",error);
+		});
+	}, []);
+
+	const [pendingNo, setPendingNo] = useState(0);
+
+	useEffect(()=>{
+		axios.get('http://localhost:9000/api/applications/applications')
+		.then((response)=>{
+			const filterPending = response.data.filter(application => application.reviewStatus === 'pending' && application.mediaId === mediaId);
+
+			const totalPending = filterPending.length;
+			setPendingNo(totalPending);
+		}).catch((error)=>{
+			console.error("Error Found",error);
+		});
+	},[]);
+
+	const [approveNo, setApproveNo]  = useState(0);
+
+	useEffect(()=>{
+		axios.get('http://localhost:9000/api/applications/applications')
+		.then((response)=>{
+			const filterApprove = response.data.filter(application => application.reviewStatus === 'Accepted' && application.mediaId === mediaId);
+
+			const totalApprove = filterApprove.length;
+			setApproveNo(totalApprove);
+ 		}).catch((error)=>{
+			console.error("Error Found", error);
+		});
+	},[]);
+
+	const [noOfService, setNoOfService] = useState(0);
+
+
+	useEffect(()=>{
+		axios.get(`http://localhost:9000/api/services/mediaId/${mediaId}`)
+		.then((response)=>{
+
+			const services = response.data;
+
+			const totalService = services.length;
+
+			setNoOfService(totalService);
+
+		}).catch((error)=>{
+			console.error("Error Found", error);
+		});
+	}, []);
   return (
     <>
     <Navigation />
@@ -38,7 +102,7 @@ export const Dashboard = () => {
 				<div class="d-flex align-items-center">
 					<div>
 						<p class="mb-0 text-secondary">Total Application</p>
-						<h4 class="my-1 text-info mt-4">{21}</h4>
+						<h4 class="my-1 text-info mt-4">{noOfApp}</h4>
 					</div>
 					<div class="widgets-icons-2 rounded-circle bg-gradient-scooter text-white ms-auto">
 						<i class="fa fa-user"></i>
@@ -53,7 +117,7 @@ export const Dashboard = () => {
 			   <div class="d-flex align-items-center">
 				   <div>
 					   <p class="mb-0 text-secondary">Pending Application</p>
-					   <h4 class="my-1 text-danger mt-4">{15}</h4>
+					   <h4 class="my-1 text-danger mt-4">{pendingNo}</h4>
 				   </div>
 				   <div class="widgets-icons-2 rounded-circle bg-gradient-bloody text-white ms-auto">
 					<i class="fa fa-trello"></i>
@@ -68,8 +132,8 @@ export const Dashboard = () => {
 		   <div class="card-body">
 			   <div class="d-flex align-items-center">
 				   <div>
-					   <p class="mb-0 text-secondary">Approved Application</p>
-					   <h4 class="my-1 text-warning mt-4">{32}</h4>
+					   <p class="mb-0 text-secondary">Accepted Application</p>
+					   <h4 class="my-1 text-warning mt-4">{approveNo}</h4>
 				   </div>
 				   <div class="widgets-icons-2 rounded-circle bg-gradient-blooker text-white ms-auto">
 					<i class="fa fa-ban"></i>
@@ -86,7 +150,7 @@ export const Dashboard = () => {
 			   <div class="d-flex align-items-center">
 				   <div>
 					   <p class="mb-0 text-secondary">Total Services</p>
-					   <h4 class="my-1 text-success mt-4">{150}</h4>
+					   <h4 class="my-1 text-success mt-4">{noOfService}</h4>
 				   </div>
 				   <div class="widgets-icons-2 rounded-circle bg-gradient-ohhappiness text-white ms-auto">
 					<i class="fa fa-gift"></i>
@@ -96,40 +160,7 @@ export const Dashboard = () => {
 		</div>
 	  </div>
 
-      <div class="col mt-5">
-		<div class="card radius-10 border-start border-0 border-3 border-warning">
-		   <div class="card-body">
-			   <div class="d-flex align-items-center">
-				   <div>
-					   <p class="mb-0 text-secondary">Active Service</p>
-					   <h4 class="my-1 text-warning mt-4">{32}</h4>
-				   </div>
-				   <div class="widgets-icons-2 rounded-circle bg-gradient-blooker text-white ms-auto">
-					<i class="fa fa-users"></i>
-				   </div>
-			   </div>
-		   </div>
-		</div>
-	  </div> 
-
-
-
-
-      <div class="col mt-5">
-		<div class="card radius-10 border-start border-0 border-3 border-warning">
-		   <div class="card-body">
-			   <div class="d-flex align-items-center">
-				   <div>
-					   <p class="mb-0 text-secondary">InActive Service</p>
-					   <h4 class="my-1 text-warning mt-4">{32}</h4>
-				   </div>
-				   <div class="widgets-icons-2 rounded-circle bg-gradient-blooker text-white ms-auto">
-					<i class="fa fa-users"></i>
-				   </div>
-			   </div>
-		   </div>
-		</div>
-	  </div> 
+ 
 	</div>
 
     </div>    

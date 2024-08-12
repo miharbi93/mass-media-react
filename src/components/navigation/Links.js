@@ -18,15 +18,16 @@ const links = {
 
         { label:'Manage Services', path: '/services', icon: 'trello' },
 
-        { label:'Manage Application', path: '/applications', icon: 'list-ul' },
+        { label: 'Payment Records', path: '/payments-info', icon: 'dollar' },
 
-        { label: 'Payment Records', path: '/payments', icon: 'dollar' },
+
+        { label:'Manage Application', path: '/applications', icon: 'list-ul' },
 
         { label: 'Channel Information', path: '/channel-info', icon: 'info-circle' },
 
         { label: 'Generate Report', path: '/generate-report', icon: 'download' },
 
-        { label: 'Account Settings', path: 'account-setting', icon: 'cogs' }
+        { label: 'Account Settings', path: '/setting-account', icon: 'cogs' }
 
     ],
 

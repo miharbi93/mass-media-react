@@ -1,13 +1,13 @@
 import React from 'react'
 import { Navigation } from '../../navigation/Navigation'
 import { NavLink,Outlet } from 'react-router-dom'
-export const Bill = () => {
+export const Payment = () => {
   return (
     <><Navigation />
     <div className='main mt-5'>
         <div className='content'>
             <div className='container-fluid mt-5'>
-                <div className='content-header mb-3'>
+                <div className='content-header mb-5'>
                   <nav aria-label='breadcrumb'>
                     <ol className='breadcrumb'>
 
@@ -16,7 +16,7 @@ export const Bill = () => {
                         </li>
 
                         <li className='breadcrumb-iterm active' aria-current="page">
-                          <NavLink to='/generate-bill' className="head-link"> Generate bill</NavLink>
+                          <NavLink to='/payments-info' className="head-link"> payment-info</NavLink>
                         </li>
 
                     </ol>

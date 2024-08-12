@@ -30,11 +30,11 @@ export const ViewApplications = () => {
     fetchApplications();
   }, []);
 
-  const handleCancelApplication = (applicationId) => {
-    axios.patch(`http://localhost:9000/api/review/applications/${applicationId}/cancel`)
+  const handlereivewstatusApplication = (applicationId) => {
+    axios.patch(`http://localhost:9000/api/review/applications/${applicationId}/reivewstatus`)
       .then(response => {
         console.log(response.data);
-        setMessage('Application canceled successfully');
+        // setMessage('Application canceled successfully');
         fetchApplications(); // Refetch applications after canceling
       })
       .catch(error => {
@@ -69,7 +69,7 @@ export const ViewApplications = () => {
 
       {message && <div className="alert alert-info">{message}</div>}
       {applications.length === 0 ? (
-        <div className="card bg-warning   fade show">
+        <div className="card  alert alert-primary  alert-dismissible fade show">
           <div className="card-body">
             <h5 className="card-title"><i className='fa fa-warning'> </i>  No applications</h5>
             <p className="card-text">There are no applications to display.</p>
@@ -124,11 +124,18 @@ export const ViewApplications = () => {
                         <i className='fa fa-download'></i> Download
                       </button>
                     </td>
-                    <td>{application.status}</td>
                     <td>
-                      <button className='btn btn-outline-info'>
+                      <button 
+                      disabled={application.status === 'Cancel'}
+                      onClick={() => handlereivewstatusApplication(application.applicationId)}
+                      className={`btn ${application.status === 'Accepted' ? 'btn-success' : application.status === 'Rejected' ? 'btn-warning' : 'btn-dark'
+                      
+                      }`}>{application.status}</button>
+                    </td>
+                    <td>
+                      {/* <button className='btn btn-outline-info'>
                         <i className='fa fa-eye'></i> View
-                      </button>
+                      </button> */}
                       <button
                         className='btn btn-outline-danger ms-2'
                       >

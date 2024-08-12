@@ -17,7 +17,7 @@ export const EditStaff = () => {
     useEffect(() => {
         // Fetch staff details
         axios.get(`http://localhost:9000/api/staff/byId/${userId}`)
-           .then((response) => {
+            .then((response) => {
                 const staffData = response.data;
                 setUsername(staffData.username);
                 setEmail(staffData.email);
@@ -28,10 +28,10 @@ export const EditStaff = () => {
 
         // Fetch media channels
         axios.get('http://localhost:9000/api/channel/all')
-           .then((response) => {
+            .then((response) => {
                 setMassMediaChannel(response.data);
             })
-           .catch((error) => {
+            .catch((error) => {
                 console.error('Error Occurred', error);
             });
     }, [userId]);
@@ -47,15 +47,15 @@ export const EditStaff = () => {
             mediaChannel: {
                 mediaId: parseInt(media),
             },
-           
+
         };
-    
+
         if (password) {
             updatedStaff.password = password;
         }
-    
+
         console.log('Updated staff:', updatedStaff);
-    
+
         axios.patch(`http://localhost:9000/api/staff/update/${userId}`, updatedStaff)
             .then(() => {
                 // navigate('/staff');
@@ -65,7 +65,7 @@ export const EditStaff = () => {
                 console.error('There was an error updating the staff!', error);
             });
     };
-   
+
 
 
     return (
@@ -94,13 +94,13 @@ export const EditStaff = () => {
                     <div className='col-md-6'>
                         <label className='form-label'>Status</label>
                         <select
-  className='form-control'
-  value={account_status}
-  onChange={(event) => setStatus(event.target.value)}
->
-  <option value='Active'>Active</option>
-  <option value='Inactive'>Inactive</option>
-</select>
+                            className='form-control'
+                            value={account_status}
+                            onChange={(event) => setStatus(event.target.value)}
+                        >
+                            <option value='Active'>Active</option>
+                            <option value='Inactive'>Inactive</option>
+                        </select>
                     </div>
                 </div>
 

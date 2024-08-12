@@ -62,7 +62,8 @@ export const ViewService = () => {
     {data.length === 0 ? 
     
     <div class="alert alert-primary  alert-dismissible fade show">
-        <strong><i className='fa fa-warning'> </i> Warning!</strong> No service Found.
+        <strong><i className='fa fa-warning'> </i> Warning!</strong> 
+        <h6 className='mt-4'>No service Found.</h6>
     </div>: (
     <div className='table-responsive mt-2'>
         <table className='table table-hover table-bordered'>

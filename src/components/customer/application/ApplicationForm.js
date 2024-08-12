@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { ToastContainer, toast, ToastPosition } from 'react-toastify';
+
 import axios from 'axios';
 
 export const ApplicationForm = () => {
@@ -61,10 +63,22 @@ export const ApplicationForm = () => {
         },
       });
       console.log(response.data);
-      alert("Successful");
+      // alert("Successful");
+      toast.success("Submited successfully", {
+        className: "toast-success-inside",
+        position: "top-right", // or "top-left", "bottom-right", "bottom-left"
+        autoClose: 5000,
+      
+      });
     } catch (error) {
       console.error('Error submitting form:', error);
-      alert("There was an error submitting the form");
+      // alert("There was an error submitting the form");
+      toast.error("Fail to submit", {
+        className: "toast-error-inside",
+        position: "top-right", // or "top-left", "bottom-right", "bottom-left"
+        autoClose: 5000,
+      
+      });
     }
   };
 
@@ -72,6 +86,8 @@ export const ApplicationForm = () => {
     <form onSubmit={handleSubmit}>
       <h5 className='fw-bold mb-2 text-uppercase'>Application Form Media ID = {mediaId}</h5>
       <p className='mb-5'>Fill all required information</p>
+
+      <ToastContainer/>
 
       <div className='row'>
         <div className='row mb-5'>

@@ -1,5 +1,7 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
+import { ToastContainer, toast, ToastPosition } from 'react-toastify';
+
 
 export const AccountSetting = () => {
   const [data, setData] = useState('');
@@ -40,7 +42,13 @@ export const AccountSetting = () => {
           password: newPassword,
         })
           .then((response) => {
-            setSuccess('Profile and password updated successfully!');
+            // setSuccess('Profile and password updated successfully!');
+            toast.success("Updated successfully", {
+              className: "toast-success-inside",
+              position: "top-right", // or "top-left", "bottom-right", "bottom-left"
+              autoClose: 5000,
+            
+            });
             setError(null);
           })
           .catch((error) => {
@@ -48,7 +56,14 @@ export const AccountSetting = () => {
             setSuccess(null);
           });
       } else {
-        setError('New password and confirm new password do not match');
+        // setError('New password and confirm new password do not match');
+        toast.error("Password does not match", {
+          className: "toast-error-inside",
+          position: "top-right", // or "top-left", "bottom-right", "bottom-left"
+          autoClose: 5000,
+        
+        });
+        
         setSuccess(null);
       }
     } else {
@@ -59,13 +74,14 @@ export const AccountSetting = () => {
 
   return (
     <form>
+      <ToastContainer/>
       <h5 className='fw-bold mb-2 text-uppercase'>Account Setting {data.username}</h5>
       <p className='mb-2'>You can update the Account Information</p>
 
       <div className='row mt-5 mb-5'>
 
       {error && <div className='alert alert-danger'>{error}</div>}
-      {success && <div className='alert alert-success'>{success}</div>}
+      {/* {success && <div className='alert alert-success'>{success}</div>} */}
       
         <div className='col-md-6'>
           <p className='form-label'>Username</p>

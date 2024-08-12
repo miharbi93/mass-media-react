@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import logo from '../../../circled-user-icon-.png';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
+import { ToastContainer, toast, ToastPosition } from 'react-toastify';
+
 
 export const EditCustomer = () => {
 
@@ -45,7 +47,22 @@ export const EditCustomer = () => {
       });
   
       if (response.ok) {
-        navigate(-1); // redirect to customers list page
+        toast.success("Updated successfully", {
+          className: "toast-success-inside",
+          position: "top-right", // or "top-left", "bottom-right", "bottom-left"
+          autoClose: 4000,
+        
+        });
+
+
+        setTimeout(()=>{
+
+          navigate(-1 ,{
+            replace:true,
+            // state: { userRole: userData.role},
+          });
+        }, 4000);
+        // navigate(-1); // redirect to customers list page
       } else {
         console.error('Error updating customer:', response.status);
       }
@@ -77,7 +94,23 @@ export const EditCustomer = () => {
       });
 
       if (response.ok) {
-        alert('Default password set successfully');
+        // alert('Default password set successfully');
+        toast.success("Updated successfully", {
+          className: "toast-success-inside",
+          position: "top-right", // or "top-left", "bottom-right", "bottom-left"
+          autoClose: 5000,
+        
+        });
+
+
+        setTimeout(()=>{
+
+          navigate('/view-customer',{
+            replace:true,
+            // state: { userRole: userData.role},
+          });
+        }, 5000);
+
       } else {
         console.error('Error setting default password:', response.status);
       }
@@ -99,6 +132,9 @@ export const EditCustomer = () => {
 
   return (
     <form onSubmit={handleSubmit}>
+
+<ToastContainer/>
+
       <h5 className='fw-bold mb-2 text-uppercase'>Update Customer with ID {userId} </h5>
       <p className='mb-5'>Fill all required information</p>
       <div className='row'>

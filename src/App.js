@@ -41,6 +41,10 @@ import { Invoice } from './components/Invoice';
 import { Bill } from './components/customer/bill/Bill';
 import ViewBill from './components/customer/bill/ViewBill';
 import { GenerateBill } from './components/customer/bill/GenerateBill';
+import { Payment } from './components/staff/payments/payment';
+import { ViewPaymentRecord } from './components/staff/payments/ViewPaymentRecord';
+import { AccountSettings } from './components/staff/accountSetting/AccountSetting';
+import { Accounts } from './components/staff/accountSetting/Accounts';
 
 
 
@@ -110,6 +114,19 @@ function App() {
           <Route path='channel-info' element={<ChannelInfo/>} />
         
         </Route>
+
+        <Route path='payments-info' element={<Payment/>}>
+            <Route index element={<ViewPaymentRecord/>} />
+            <Route path='payments-info' element={<ViewPaymentRecord/>} />
+        </Route>
+
+        <Route path='/setting-account' element={<Accounts/>}>
+          <Route index element={<AccountSettings/>} />
+          <Route path='account-settin' element={<AccountSettings/>} />
+        
+        </Route>
+
+        
 
         {/* Customer */}
 
