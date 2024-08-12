@@ -27,7 +27,7 @@ export const Accounts = () => {
                       <div className='container-fluid'>
                         <div className='row d-flex justify-content-center'>
                             <div className='col-12 col-md-12 col-lg-12 col-sm-12'>
-                                <div className='border border-3 border-primary'></div>
+                                <div className='border border-3 border-dangerr'></div>
                                 <div className='card bg-white shadow-lg'>
                                     <div className='card-body p-5'>
                                         

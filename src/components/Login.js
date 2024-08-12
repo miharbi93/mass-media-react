@@ -33,6 +33,7 @@ export const Login = () => {
 
           // localStorage.setItem('username',userData.username);
           localStorage.setItem('userRole', userData.role);
+          localStorage.setItem('userId', userData.userId);
           localStorage.setItem('name', userData.mediaChannel.mediaName);
           localStorage.setItem('image',userData.mediaChannel.image);
           localStorage.setItem('mediaId', userData.mediaChannel.mediaId);
