@@ -1,6 +1,8 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
+import { ToastContainer, toast, ToastPosition } from 'react-toastify';
+
 
 export const AccountSettings = () => {
 
@@ -62,7 +64,13 @@ export const AccountSettings = () => {
         axios.patch(`http://localhost:9000/api/staff/update/${userId}`, updatedStaff)
             .then(() => {
                 // navigate('/staff');
-                alert("Successfull Update")
+                // alert("Successfull Update")
+                toast.success("Updated successfully", {
+                    className: "toast-success-inside",
+                    position: "top-right", // or "top-left", "bottom-right", "bottom-left"
+                    autoClose: 5000,
+                  
+                  });
             })
             .catch((error) => {
                 console.error('There was an error updating the staff!', error);
@@ -72,6 +80,7 @@ export const AccountSettings = () => {
   return (
     <>
     <form onSubmit={handleSubmit}>
+        <ToastContainer/>
             <h5 className='fw-bold mb-2 text-uppercase'>Update Media Channel Staff {userId}</h5>
 
             <div className='row'>

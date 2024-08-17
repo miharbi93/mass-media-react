@@ -140,6 +140,7 @@ export const ChannelInfo = () => {
                                 <p className='form-label'>Channel Website Url</p>
                                 <input type='text' 
                                     className=' form-control fw-bold text-success' 
+                                    onChange={(event) => setMediaWebUrl(event.target.value)}
                                     value={mediaWebUrl} />
                             </div>
                         </div>
@@ -151,6 +152,7 @@ export const ChannelInfo = () => {
                                 <p className='form-label'>Channel Description</p>
                                 <input type='text' 
                                     className='form-control fw-bold text-success' 
+                                    onChange={(event) => setMediaDescription(event.target.value)}
                                     value={mediaDescription} />
                             </div>
                         </div>
@@ -169,12 +171,17 @@ export const ChannelInfo = () => {
                         <div className='col-md-4'>
                             <div className='form-group'>
                                 <p className='form-label'>Media Channel Status</p>
-                                <select className='form-select'
+                                {/* <select className='form-select'
                                     value={mediaStatus} 
                                     onChange={(event) => setMediaStatus(event.target.value)}>
                                     <option>Open</option>
                                     <option>Closed</option>
-                            </select>
+                            </select> */}
+                                <input type='text' 
+                                    className='form-control fw-bold text-success' 
+                                    readOnly
+                                    onChange={(event) => setMediaStatus(event.target.value)}
+                                    value={mediaStatus} />
                             </div>
                         </div>
                     </div>

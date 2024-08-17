@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { ToastContainer, toast, ToastPosition } from 'react-toastify';
+
 
 export const EditStaff = () => {
     const { userId } = useParams();
@@ -59,7 +61,21 @@ export const EditStaff = () => {
         axios.patch(`http://localhost:9000/api/staff/update/${userId}`, updatedStaff)
             .then(() => {
                 // navigate('/staff');
-                alert("Successfull Update")
+                // alert("Successfull Update")
+                toast.success("Updated successfully", {
+                    className: "toast-success-inside",
+                    position: "top-right", // or "top-left", "bottom-right", "bottom-left"
+                    autoClose: 3000,
+                  
+                  });
+
+                  setTimeout(()=>{
+
+                    navigate('/manage-staff',{
+                      replace:true,
+                      // state: { userRole: userData.role},
+                    });
+                  }, 3000);
             })
             .catch((error) => {
                 console.error('There was an error updating the staff!', error);
@@ -70,25 +86,26 @@ export const EditStaff = () => {
 
     return (
         <form onSubmit={handleSubmit}>
+            <ToastContainer/>
             <h5 className='fw-bold mb-2 text-uppercase'>Update Media Channel Staff {userId}</h5>
 
             <div className='row'>
                 <div className='row mt-5 mb-4'>
                     <div className='col-md-6'>
                         <label className='form-label'>Fullname</label>
-                        <input type='text' value={username} onChange={(e) => setUsername(e.target.value)} className='form-control' />
+                        <input type='text' value={username} required onChange={(e) => setUsername(e.target.value)} className='form-control' />
                     </div>
 
                     <div className='col-md-6'>
                         <label className='form-label'>Email</label>
-                        <input type='text' value={email} onChange={(e) => setEmail(e.target.value)} className='form-control' />
+                        <input type='text' value={email} required onChange={(e) => setEmail(e.target.value)} className='form-control' />
                     </div>
                 </div>
 
                 <div className='row mb-4'>
                     <div className='col-md-6'>
                         <label className='form-label'>Phonenumber</label>
-                        <input type='text' value={phonenumber} onChange={(e) => setPhonenumber(e.target.value)} className='form-control' />
+                        <input type='text' value={phonenumber}  onChange={(e) => setPhonenumber(e.target.value)} className='form-control' />
                     </div>
 
                     <div className='col-md-6'>
@@ -96,6 +113,7 @@ export const EditStaff = () => {
                         <select
                             className='form-control'
                             value={account_status}
+                            required
                             onChange={(event) => setStatus(event.target.value)}
                         >
                             <option value='Active'>Active</option>
@@ -107,7 +125,7 @@ export const EditStaff = () => {
                 <div className='row mb-4'>
                     <div className='col-md-6'>
                         <label className='form-label'>Select Mass Media</label>
-                        <select value={media} onChange={(e) => setMedia(e.target.value)} className='form-control'>
+                        <select required value={media} onChange={(e) => setMedia(e.target.value)} className='form-control'>
                             {/* <option value=''>None</option> */}
                             {massMediaChannel.map((channel) => (
                                 <option key={channel.mediaId} value={channel.mediaId}>

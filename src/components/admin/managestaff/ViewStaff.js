@@ -8,16 +8,40 @@ export const ViewStaff = () => {
   const [data, setData] = useState([]);
   const [staffCount, setStaffCount] = useState(0);
 
-  useEffect(() => {
+
+  const [showTable, setShowTable] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  // useEffect(() => {
+  //   axios.get('http://localhost:9000/api/staff/all')
+  //     .then((response) => {
+  //       setData(response.data);
+  //       console.log(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error occur', error);
+  //     });
+  // }, []);
+
+  const fetchStaff = () => {
     axios.get('http://localhost:9000/api/staff/all')
-      .then((response) => {
+      .then(response => {
+        // const filteredApplications = response.data.filter(application => application.customer.userId === userID);
         setData(response.data);
-        console.log(response.data);
       })
-      .catch((error) => {
-        console.error('Error occur', error);
+      .catch(error => {
+        console.error(error);
       });
-  }, []);
+  };
+
+
+  useEffect(() => {
+    fetchStaff();
+    setTimeout(() => {
+      setShowTable(true);
+      setLoading(false);
+    }, 900);
+  }, [])
 
   useEffect(() => {
     fetch('http://localhost:9000/api/staff/count')
@@ -43,72 +67,105 @@ export const ViewStaff = () => {
   return (
     <>
       <h5 className='fw-bold mb-5 text-uppercase'>Manage Mass Media Staff</h5>
-      <nav>
-        <Link to='new-staff'>
-          <button className='btn btn-outline-success mb-4'>
-            <i className='fa fa-plus'> </i> <label> New Staff</label>
-          </button>
-        </Link>
-
-        <button type='button' className='btn btn-outline-primary mb-4 ms-5'>
-          Total Staff
-          <span className='badge bg-danger ms-1'>{staffCount} </span>
-        </button>
-      </nav>
-
-      {data.length > 0 ? (
-        <div className='table-responsive mt-2'>
-          <ToastContainer />
-          <table className='table table-hover table-bordered'>
-            <thead>
-              <tr>
-                <th>Staff No</th>
-                <th>Staff Name</th>
-                <th>Email</th>
-                <th>Media Name</th>
-                <th>Created Date</th>
-                <th>Staff Status</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {data.map((item, index) => (
-                <tr key={item.userId}>
-                  <td>{index + 1}</td>
-                  <td>{item.username}</td>
-                  <td>{item.email}</td>
-                  <td>{item.mediaChannel.mediaName}</td>
-                  <th>{item.createdDate}</th>
-                  <td>{item.account_status}</td>
-                  <td>
-                    <Link to={`edit-staff/${item.userId}`} className='btn btn-outline-success'>
-                      <i className='fa fa-edit'> Edit</i>
-                    </Link>
-
-                    <button onClick={() => handleDelete(item.userId)} className='btn btn-outline-danger ms-3'>
-                      <i className='fa fa-trash'> Delete</i>
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+      {loading ? (
+        <strong>
+          <i className='fa fa-spinner fa-spin'> </i> Loading...
+        </strong>
       ) : (
-        // <div className='card mt-2 bg-warning'>
-        //   <div className='card-body'>
-        //     <h5 className='card-title'><i className='fa fa-warning'></i> No Staff Available</h5>
-        //     <p className='card-text'>There are no staff members available.</p>
-        //   </div>
-        // </div>
+        <>
+          {showTable && (
+            <><nav>
+              <Link to='new-staff'>
+                <button className='btn btn-outline-success mb-4'>
+                  <i className='fa fa-plus'> </i> <label> New Staff</label>
+                </button>
+              </Link>
 
-        <div class="alert alert-warning  alert-dismissible fade show">
-            <strong>
-                <i className='fa fa-warning'> </i> Warning!
-            </strong> No Staff Available
-            <p className='mt-4'>There are no staff members available.</p>
-        </div>
+              <button type='button' className='btn btn-outline-primary mb-4 ms-5'>
+                Total Staff
+                <span className='badge bg-danger ms-1'>{staffCount} </span>
+              </button>
+            </nav>
+            <div className='table-responsive mt-2'>
+                {data.length === 0 ? (
+
+                  <div class="alert alert-primary  alert-dismissible fade show">
+                    <strong>
+                      <i className='fa fa-warning'> </i> Warning!
+                    </strong>
+                    <p className='mt-4'>No staff members available.</p>
+                  </div>
+
+                ) : (
+                  <ToastContainer />
+                  ,
+                  <table className='table table-hover table-bordered'>
+                    <thead>
+                      <tr>
+                        <th className='text-center'>SN</th>
+                        <th className='text-center'>Staff Name</th>
+                        <th className='text-center'>Email</th>
+                        <th className='text-center'>Media Name</th>
+                        <th className='text-center'>Media Type</th>
+                        <th className='text-center'>Created Date</th>
+                        <th className='text-center'>Staff Status</th>
+                        <th className='text-center'>Action</th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      {data.map((item, index) => (
+                        <tr key={item.userId}>
+                          <td className='text-center'>{index + 1}</td>
+                          <td className='text-center'>{item.username}</td>
+                          <td className='text-center'>{item.email}</td>
+                          <td className='text-center'>{item.mediaChannel.mediaName}</td>
+                          <td className='text-center'>{item.mediaChannel.mediaType}</td>
+                          <th className='text-center'>{item.createdDate}</th>
+                          {/* <td className='text-center'>{item.account_status}</td> */}
+                          <td className='text-center'>
+
+                            {item.account_status === 'Active' ? (
+                              <span
+                                style={{
+                                  backgroundColor: '#00FF7F',
+                                  padding: '5px 20px',
+                                  borderRadius: '5px',
+                                  color: 'black',
+                                  fontWeight: 'bold',
+                                }}>
+                                {item.account_status}
+                              </span>
+                            ) : (
+                              <span
+                                style={{
+                                  backgroundColor: '#FF0000',
+                                  padding: '5px 20px',
+                                  borderRadius: '5px',
+                                  color: '#FFFFFF',
+                                }}>
+                                {item.account_status}
+                              </span>
+                            )}</td>
+                          <td>
+                            <Link to={`edit-staff/${item.userId}`} className='btn btn-outline-success'>
+                              <i className='fa fa-edit'> Edit</i>
+                            </Link>
+
+                            <button onClick={() => handleDelete(item.userId)} className='btn btn-outline-danger ms-3'>
+                              <i className='fa fa-trash'> Delete</i>
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                )}
+              </div>
+            </>
+          )}
+        </>
+
       )}
     </>
   );

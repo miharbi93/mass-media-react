@@ -47,12 +47,22 @@ export const NewStaff = () => {
     axios.post('http://localhost:9000/api/staff/add', newStaff)
      .then((response) => {
         // console.log(response);
-        toast.success("Staff updated successfully", {
+        toast.success("Staff created successfully", {
           className: "toast-success-inside",
           position: "top-right", // or "top-left", "bottom-right", "bottom-left"
-          autoClose: 5000,
+          autoClose: 3000,
         });
-        navigate(-1);
+
+
+        setTimeout(()=>{
+          navigate(-1,{
+            replace:true,
+            // state: { userRole: userData.role},
+          });
+        }, 3000);
+
+        // navigate(-1);
+        
       })
      .catch((error) => {
         console.error('Error Occur', error);

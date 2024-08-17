@@ -49,49 +49,84 @@ export const ViewBill = () => {
 
   const generatePDF = async () => {
     const pdf = new jsPDF();
-    pdf.setFontSize(24);
-    pdf.text(invoiceData.businessName, 10, 20);
-    pdf.setFontSize(14);
-    pdf.text(invoiceData.streetAddress, 10, 30);
-    pdf.text(invoiceData.city, 10, 40);
 
-    pdf.setFontSize(18);
-    pdf.text("BILL FROM", 10, 60);
-    pdf.setFontSize(14);
-    pdf.text(paymentData.application.mediaService.mediaChannel.mediaName, 10, 70);
-    pdf.text(paymentData.application.mediaService.mediaChannel.mediaName, 10, 80);
+pdf.setFontSize(24);
 
-    pdf.setFontSize(18);
-    pdf.text("INVOICE", 150, 60);
-    pdf.setFontSize(14);
-    pdf.text(`Invoice #${paymentData.paymentId}`, 150, 70);
-    pdf.text(paymentData.paymentDate, 150, 80);
+pdf.text(invoiceData.businessName, 10, 20);
 
-    pdf.setFontSize(18);
-    pdf.text("SITE ADDRESS", 10, 100);
-    pdf.setFontSize(14);
-    pdf.text(invoiceData.siteAddress, 10, 110);
+pdf.setFontSize(14);
 
-    pdf.setFontSize(12);
-    pdf.text("No", 10, 130);
-    pdf.text("Description", 30, 130);
-    pdf.text("Quantity", 120, 130);
-    pdf.text("Unit Price", 150, 130);
-    pdf.text("Line Total", 180, 130);
+pdf.text(invoiceData.streetAddress, 10, 30);
 
-    let y = 140;
-    pdf.text("1", 10, y);
-    pdf.text(paymentData.application.mediaService.serviceName, 30, y);
-    pdf.text(paymentData.application.startDate, 120, y);
-    pdf.text(paymentData.application.endDate, 150, y);
-    pdf.text(paymentData.application.dayPackage.toString(), 180, y);
-    y += 10;
+pdf.text(invoiceData.city, 10, 40);
 
-    pdf.text("Subtotal", 10, y + 20);
-    pdf.text(paymentData.application.amount.toString(), 150, y + 20);
 
-    pdf.save("invoice.pdf");
-  };
+pdf.setFontSize(18);
+
+pdf.text("BILL FROM", 10, 60);
+
+pdf.setFontSize(14);
+
+pdf.text(paymentData.application.mediaService.mediaChannel.mediaName, 10, 70);
+
+pdf.text(paymentData.application.mediaService.mediaChannel.mediaName, 10, 80);
+
+
+pdf.setFontSize(18);
+
+pdf.text("INVOICE", 150, 60);
+
+pdf.setFontSize(14);
+
+pdf.text(`Invoice #${paymentData.paymentId}`, 150, 70);
+
+pdf.text(paymentData.paymentDate, 150, 80);
+
+
+pdf.setFontSize(18);
+
+pdf.text("SITE ADDRESS", 10, 100);
+
+pdf.setFontSize(14);
+
+pdf.text(invoiceData.siteAddress, 10, 110);
+
+
+pdf.setFontSize(12);
+
+pdf.text("No", 10, 130);
+
+pdf.text("Description", 30, 130);
+
+pdf.text("Quantity", 120, 130);
+
+pdf.text("Unit Price", 150, 130);
+
+pdf.text("Line Total", 180, 130);
+
+
+let y = 140;
+
+pdf.text("1", 10, y);
+
+pdf.text(paymentData.application.mediaService.serviceName, 30, y);
+
+pdf.text(paymentData.application.startDate, 120, y);
+
+pdf.text(paymentData.application.endDate, 150, y);
+
+pdf.text(paymentData.application.dayPackage.toString(), 180, y);
+
+y += 10;
+
+
+pdf.text("Subtotal", 10, y + 20);
+
+pdf.text(paymentData.application.amount.toString(), 150, y + 20);
+
+pdf.save("invoice.pdf");
+
+};
 
   return (
     <div className="containers" style={{ padding: 20, maxWidth: 1500, maxHeight:800, margin: '10px auto' }}>
@@ -130,6 +165,7 @@ export const ViewBill = () => {
 
             <h2 className='invoice-span mt-5'>Generated Controll Number</h2>
             <p style={{fontSize: 17}}> {paymentData.controlNumber}</p>
+            
 
           </div>
           <div className="bill-number">

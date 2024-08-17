@@ -23,7 +23,7 @@ export const Invoice = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get(`http://localhost:9000/api/1`)
+    axios.get(`http://localhost:9000/api/payment/1`)
     .then(response => {
         console.log(response.data.email);
         setPaymentData(response.data);

@@ -8,6 +8,10 @@ export const ViewApplication = () => {
   const [applications, setApplications] = useState([]);
   const [message, setMessage] = useState('');
 
+  const [showTable, setShowTable] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+
   const userID = parseInt(localStorage.getItem('userId'));
 
   const fetchApplications = () => {
@@ -25,6 +29,11 @@ export const ViewApplication = () => {
 
   useEffect(() => {
     fetchApplications();
+
+    setTimeout(() => {
+      setShowTable(true);
+      setLoading(false);
+    }, 900);
   }, []);
 
   const handleCancelApplication = (applicationId) => {
@@ -36,7 +45,7 @@ export const ViewApplication = () => {
           className: "toast-success-inside",
           position: "top-right", // or "top-left", "bottom-right", "bottom-left"
           autoClose: 5000,
-        
+
         });
         fetchApplications(); // Refetch applications after canceling
       })
@@ -63,9 +72,9 @@ export const ViewApplication = () => {
           className: "toast-success-inside",
           position: "top-right", // or "top-left", "bottom-right", "bottom-left"
           autoClose: 5000,
-        
+
         });
-        
+
       })
       .catch(error => {
         console.error(error);
@@ -73,83 +82,168 @@ export const ViewApplication = () => {
       });
   };
 
+  const handleDelete = (applicationId) => {
+    if (window.confirm("Are you sure you want to delete")) {
+      axios.delete(`http://localhost:9000/api/applications/delete/${applicationId}`)
+        .then(() => {
+
+          fetchApplications();
+          // setApplications(applications.filter (item => item.application.userId  !== userId));
+          toast.success("Deleted successfully", {
+            className: "toast-success-inside",
+            position: "top-right", // or "top-left", "bottom-right", "bottom-left"
+            autoClose: 5000,
+
+          });
+        })
+        .catch(error => console.error("Error", error));
+
+    }
+
+  }
+
   return (
     <>
       <h5 className='fw-bold mb-5 text-uppercase'>Manage Application</h5>
-      <ToastContainer/>
+      <ToastContainer />
 
       {/* {message && <div className="alert alert-info">{message}</div>} */}
-      {applications.length === 0 ? (
-        <div className="card alert alert-primary  alert-dismissible fade show">
-          <div className="card-body">
-            <h5 className="card-title mb-5"><i className='fa fa-warning'> </i> {userID} No applications Found</h5>
-            <p className="card-text">There are no applications to display.</p>
-          </div>
-        </div>
+      {loading ? (
+        <strong>
+          <i className='fa fa-spinner fa-spin'> </i> Loading...
+        </strong>
       ) : (
+
+
+
         <>
-          <nav>
-            <button type='button' className='btn btn-outline-success mb-4'>
-              Total Application
-              <span className='badge bg-dark ms-1'>{applications.length}</span>
-            </button>
-          </nav>
-          <div className='table table-responsive mt-2'>
-            <table className='table table-hover table-bordered'>
-              <thead>
-                <tr>
-                  <th className='text-center p-2'>ID</th>
-                  <th className='text-center'>Media Name</th>
-                  <th className='text-center'>Service Name</th>
-                  <th className='text-center'>Start Date</th>
-                  <th className='text-center'>End Date</th>
-                  <th className='text-center'>Day</th>
-                  <th className='text-center'>Total Amount</th>
-                  <th className='text-center'>Status</th>
-                  <th className='text-center'>Advertise Doc</th>
-                  <th className='text-center'>Uthibitisho Doc</th>
-                  <th className='text-center'>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {applications.map((application, index) => (
-                  <tr key={index}>
-                    <td>{index + 1}</td>
-                    <td>{application.mediaService.mediaChannel.mediaName}</td>
-                    <td>{application.mediaService.serviceName}</td>
-                    <td>{application.startDate}</td>
-                    <td>{application.endDate}</td>
-                    <td>{application.dayPackage}</td>
-                    <td>{application.amount}</td>
-                    <td>{application.reviewApplication.reviewStatus}</td>
-                    <td>
-                      <button className='btn btn-primary' onClick={() => handleDownloadDocument(application.applicationId, 'advertise')}>
-                        <i className='fa fa-download'> </i> Download
-                      </button>
-                    </td>
-                    <td>
-                      <button className='btn btn-primary' onClick={() => handleDownloadDocument(application.applicationId, 'uthibitisho')}>
-                        <i className='fa fa-download'></i> Download
-                      </button>
-                    </td>
-                    <td>
-                      <button className='btn btn-outline-info'>
-                        <i className='fa fa-eye'></i> View
-                      </button>
-                      <button
-                        className='btn btn-outline-danger ms-2'
-                        onClick={() => handleCancelApplication(application.applicationId)}
-                        disabled={application.reviewApplication.reviewStatus !== 'pending'}
-                      >
-                        <i className='fa fa-ban'></i> Cancel
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          {showTable && (
+            <>
+              {applications.length > 0 ? (
+                <><nav>
+
+                  <button type='button' className='btn btn-outline-success mb-4'>
+                    Total Application
+                    <span className='badge bg-dark ms-1'>{applications.length}</span>
+                  </button>
+                </nav><div className='table table-responsive mt-2'>
+                    <table className='table table-hover table-bordered'>
+                      <thead>
+                        <tr>
+                          <th className='text-center p-2'>ID</th>
+                          <th className='text-center'>Media Name</th>
+                          <th className='text-center'>Service Name</th>
+                          <th className='text-center'>Start Date</th>
+                          <th className='text-center'>End Date</th>
+                          <th className='text-center'>Total Day</th>
+                          {/* <th className='text-center'>Total Amount</th> */}
+                          <th className='text-center'>Status</th>
+                          <th className='text-center'>Advertise Doc</th>
+                          <th className='text-center'>Uthibitisho Doc</th>
+                          <th className='text-center'>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {applications.map((application, index) => (
+                          <tr key={index}>
+                            <td>{index + 1}</td>
+                            <td>{application.mediaService.mediaChannel.mediaName}</td>
+                            <td>{application.mediaService.serviceName}</td>
+                            <td>{application.startDate}</td>
+                            <td>{application.endDate}</td>
+                            <td>{application.dayPackage}</td>
+                            {/* <td>{application.amount}</td> */}
+                            {/* <td>{application.reviewApplication.reviewStatus}</td> */}
+                            <td>
+                              {application.reviewApplication.reviewStatus === 'Rejected' ? (
+                                <span
+                                  style={{
+                                    backgroundColor: '#ffaf33',
+                                    padding: '3px 10px',
+                                    borderRadius: '5px',
+                                    color: 'black',
+                                    fontWeight:'bold'
+                                  }}>
+                                  {application.reviewApplication.reviewStatus}
+                                </span>
+                              ) : application.reviewApplication.reviewStatus === 'Canceled' ? (
+                                <span
+                                  style={{
+                                    backgroundColor: '#FF0000',
+                                    padding: '3px 10px',
+                                    borderRadius: '5px',
+                                    color: '#FFFFFF',
+                                  }}>
+                                  {application.reviewApplication.reviewStatus}
+                                </span>
+                              ) : application.reviewApplication.reviewStatus === 'Accepted' ? (
+                                <span
+                                  style={{
+                                    backgroundColor: '#00FF7F',
+                                    padding: '3px 10px',
+                                    borderRadius: '5px',
+                                    color: 'black',
+                                    fontWeight:'bold'
+                                  }}>
+                                  {application.reviewApplication.reviewStatus}
+                                </span>
+                              ) : (
+                                <span
+                                  style={{
+                                    backgroundColor: 'silver',
+                                    padding: '3px 10px',
+                                    borderRadius: '5px',
+                                    color: 'black',
+                                  }}>
+                                  {application.reviewApplication.reviewStatus}
+                                </span>
+                              )}
+                            </td>
+                            <td>
+                              <button className='btn btn-primary' onClick={() => handleDownloadDocument(application.applicationId, 'advertise')}>
+                                <i className='fa fa-download'> </i> Download
+                              </button>
+                            </td>
+                            <td>
+                              <button className='btn btn-primary' onClick={() => handleDownloadDocument(application.applicationId, 'uthibitisho')}>
+                                <i className='fa fa-download'></i> Download
+                              </button>
+                            </td>
+                            <td>
+                              <button className='btn btn-outline-info'>
+                                <i className='fa fa-eye'></i> View
+                              </button>
+                              <button
+                                className='btn btn-outline-warning ms-2'
+                                onClick={() => handleCancelApplication(application.applicationId)}
+                                disabled={application.reviewApplication.reviewStatus !== 'pending'}
+                              >
+                                <i className='fa fa-ban'></i> Cancel
+                              </button>
+                              <button onClick={() => handleDelete(application.applicationId)}
+                                className='btn btn-outline-danger ms-2'
+                                disabled={application.reviewApplication.reviewStatus === "Accepted"}
+                              >
+                                <i className='fa fa-trash'></i> delete
+                              </button>
+
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div></>
+              ) : (
+                <div className="alert alert-primary  alert-dismissible fade show" role="alert">
+                  No data found!
+                </div>
+              )}
+            </>
+
+          )}
+
         </>
+        // loading
       )}
     </>
   );

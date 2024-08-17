@@ -105,6 +105,11 @@ export const Login = () => {
         
       }
     }catch(error){
+      toast.error("Cridential Not Found", {
+        className: "toast-error",
+        position: 'top-right',
+        autoClose: 5000,
+      });
 
       console.error(error);
     }

@@ -48,12 +48,12 @@ export const NewChannel = () => {
 
                 <div className='col-md-6'>
                     <p className='form-label'>Media Name</p>
-                    <input type='text' className='form-control' placeholder='Media Channel' value={mediaName} onChange={(e) => setMediaName(e.target.value)}/>
+                    <input type='text' className='form-control' required placeholder='Media Channel' value={mediaName} onChange={(e) => setMediaName(e.target.value)}/>
                 </div>
 
                 <div className='col-md-6'>
                     <p className='form-label'>Select Mass Media Type</p>
-                    <select className='form-select' value={mediaType} onChange={(e) => setMediaType(e.target.value)}>
+                    <select className='form-select' required value={mediaType} onChange={(e) => setMediaType(e.target.value)}>
                         <option>None</option>
                         <option>Radio</option>
                         <option>Television</option>
@@ -67,12 +67,12 @@ export const NewChannel = () => {
 
                 <div className='col-md-6'>
                     <p className='form-label'>Media Email</p>
-                    <input type='text' className='form-control' placeholder='Media Email' value={mediaEmail} onChange={(e) => setMediaEmail(e.target.value)}/>
+                    <input type='text' className='form-control' required placeholder='Media Email' value={mediaEmail} onChange={(e) => setMediaEmail(e.target.value)}/>
                 </div>
 
                 <div className='col-md-6'>
                     <p className='form-label'>Media WebUrl</p>
-                    <input type='text' className='form-control' placeholder='Media WebUrl' value={mediaWebUrl} onChange={(e) => setMediaWebUrl(e.target.value)}/>
+                    <input type='text' className='form-control' required placeholder='Media WebUrl' value={mediaWebUrl} onChange={(e) => setMediaWebUrl(e.target.value)}/>
                 </div>
 
             </div>
@@ -81,12 +81,12 @@ export const NewChannel = () => {
 
                 <div className='col-md-6'>
                     <p className='form-label'>Media Description</p>
-                    <input type='text' className='form-control' placeholder='Media Description' value={mediaDescription} onChange={(e) => setMediaDescription(e.target.value)}/>
+                    <input type='text' className='form-control' required placeholder='Media Description' value={mediaDescription} onChange={(e) => setMediaDescription(e.target.value)}/>
                 </div>
 
                 <div className='col-md-6'>
                     <p className='form-label'>Media Image</p>
-                    <input type='file' className='form-control' onChange={(e) => setMediaImage(e.target.files[0])}/>
+                    <input type='file' className='form-control' required onChange={(e) => setMediaImage(e.target.files[0])}/>
                 </div>
             </div>
 

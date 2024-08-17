@@ -93,6 +93,7 @@ export const EditChannel = () => {
               className='form-control'
               placeholder='username'
               value={mediaName}
+              required
               onChange={(event) => setMediaName(event.target.value)}
             />
           </div>
@@ -104,6 +105,7 @@ export const EditChannel = () => {
               className='form-control'
               placeholder='email'
               value={mediaEmail}
+              required
               onChange={(event) => setMediaEmail(event.target.value)}
             />
           </div>
@@ -114,6 +116,7 @@ export const EditChannel = () => {
             <select
               className='form-select'
               value={mediaType}
+              required
               onChange={(event) => setMediaType(event.target.value)}
             >
               <option>None</option>
@@ -134,6 +137,7 @@ export const EditChannel = () => {
               className='form-control'
               placeholder='webUrl'
               value={mediaWebUrl}
+              required
               onChange={(event) => setMediaWebUrl(event.target.value)}
             />
           </div>
@@ -145,6 +149,7 @@ export const EditChannel = () => {
               className='form-control'
               placeholder='description'
               value={mediaDescription}
+              required
               onChange={(event) => setMediaDescription(event.target.value)}
             />
           </div>
@@ -163,6 +168,7 @@ export const EditChannel = () => {
             <p className='form-label'>Status</p>
             <select className='form-select'
                 value={mediaStatus} 
+                required
                 onChange={(event) => setMediaStatus(event.target.value)}>
               <option>Open</option>
               <option>Closed</option>

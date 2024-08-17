@@ -17,6 +17,8 @@ export const ApplicationForm = () => {
 
   const userId = parseInt(localStorage.getItem('userId'));
 
+  const today = new Date().toISOString().split('T')[0];
+
   useEffect(() => {
     axios.get(`http://localhost:9000/api/services/mediaId/${mediaId}`)
       .then((response) => {
@@ -92,17 +94,20 @@ export const ApplicationForm = () => {
       <div className='row'>
         <div className='row mb-5'>
           <div className='col-md-6'>
-            <label className='form-label' htmlFor="customerId">Customer ID:</label>
+            {/* <label className='form-label' htmlFor="customerId">Customer ID:</label> */}
+            <h5>Note: Make sure Start date cannot be after end date</h5>
             <input className='form-control'
               type="text"
               id="customerId"
+              readOnly
+              hidden
               value={userId} 
               onChange={(e) => setCustomerId(e.target.value)}
             />
           </div>
           <div className='col-md-6'>
             <label className='form-label' htmlFor="serviceId">Select Service</label>
-            <select className='form-select' value={serviceId} onChange={(event) => setServiceId(event.target.value)}>
+            <select className='form-select' required value={serviceId} onChange={(event) => setServiceId(event.target.value)}>
               <option value="">None</option>
               {mediaService.map((service) => (
                 <option key={service.serviceId} value={service.serviceId}>
@@ -119,7 +124,9 @@ export const ApplicationForm = () => {
               type="date"
               id="startDate"
               value={startDate}
+              required
               onChange={(e) => setStartDate(e.target.value)}
+              min={today}
             />
           </div>
           <div className='col-md-6'>
@@ -128,7 +135,9 @@ export const ApplicationForm = () => {
               type="date"
               id="endDate"
               value={endDate}
+              required
               onChange={(e) => setEndDate(e.target.value)}
+              min={today}
             />
           </div>
         </div>
@@ -138,6 +147,7 @@ export const ApplicationForm = () => {
             <input className='form-control'
               type="file"
               id="advertiseDocument"
+              required
               onChange={(e) => {
                 console.log(`Advertise Document Change: ${e.target.files.length}`);
                 handleFileChange(setAdvertiseDocument)(e);
@@ -149,6 +159,7 @@ export const ApplicationForm = () => {
             <input className='form-control'
               type="file"
               id="uthibitishoDocument"
+              required
               onChange={(e) => {
                 console.log(`Uthibitisho Document Change: ${e.target.files.length}`);
                 handleFileChange(setUthibitishoDocument)(e);

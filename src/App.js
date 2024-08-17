@@ -2,7 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast, ToastPosition } from 'react-toastify';
-import './../node_modules/bootstrap/dist/css/bootstrap.min.css'
+import './../node_modules/bootstrap/dist/css/bootstrap.min.css' 
 import './../node_modules/font-awesome/css/font-awesome.min.css'
 import { Route, Routes } from 'react-router-dom';
 import { Login } from './components/Login';
@@ -45,12 +45,18 @@ import { Payment } from './components/staff/payments/payment';
 import { ViewPaymentRecord } from './components/staff/payments/ViewPaymentRecord';
 import { AccountSettings } from './components/staff/accountSetting/AccountSetting';
 import { Accounts } from './components/staff/accountSetting/Accounts';
+import { Reports } from './components/staff/generateReport/Reports';
+import { PrintReport } from './components/staff/generateReport/PrintReport';
+import { AccountCustomer } from './components/customer/accountsetting/Accounts';
+import { CustomerAccount } from './components/customer/accountsetting/CustomerAccount';
 
 
 
 function App() {
   return (
     <Routes>
+
+        <Route path='/invoice' element={<Invoice/>} />
 
         <Route path='/' element={<Login/>} />
         <Route path='new-account' element={<Register/>} />
@@ -126,11 +132,16 @@ function App() {
         
         </Route>
 
+        <Route path='generate-report' element={<Reports/>}>
+          <Route index element={<PrintReport/>}/>
+        
+        </Route>
+
         
 
         {/* Customer */}
 
-        <Route path='/dashboard' element={<CustomerDashboard/>} />
+        <Route path='dashboard' element={<CustomerDashboard/>} />
 
         <Route path='apply/:mediaId' element={<Application/>}>
           <Route index element={<ApplicationForm/>}/>
@@ -147,6 +158,10 @@ function App() {
           <Route index element={<GenerateBill/>} />
           <Route path='view-bill/:applicationId' element={<ViewBill/>} />
         
+        </Route>
+
+        <Route path='/account-setting' element={<AccountCustomer/>}>
+          <Route index element={<CustomerAccount/>}/>
         </Route>
 
 

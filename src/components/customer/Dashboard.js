@@ -6,6 +6,9 @@ import axios from 'axios';
 export const CustomerDashboard = () => {
   const [data, setData] = useState([]);
 
+  const [showChannel, setShowChannel] = useState(false);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     axios.get('http://localhost:9000/api/channel/all')
       .then((response) => {
@@ -24,7 +27,7 @@ export const CustomerDashboard = () => {
               <nav aria-label='breadcrumb'>
                 <ol className='breadcrumb'>
                   <li className='breadcrumb-item'>
-                    <i className='fa fa-home'></i> Home /
+                    <i className='fa fa-home'></i> Home 
                   </li>
                   <li className='breadcrumb-item active' aria-current="page">
                     <NavLink to='/dashboard' className="head-link">Dashboard</NavLink>
@@ -34,11 +37,16 @@ export const CustomerDashboard = () => {
             </div>
           </div>
 
+
           <section className='py-3 container shadow bg'>
+
+            
             <div className='row vw-50'>
+
+              
               <h3 className='mt-3 mb-5'>
                 <i className='fa fa-get-pocket ms-2'> </i>
-                Available Mass Media
+                Available Mass Media Channel
               </h3>
 
               <hr className='media-line' />

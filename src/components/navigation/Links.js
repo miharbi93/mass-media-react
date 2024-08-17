@@ -42,7 +42,7 @@ const links = {
 
         // {label: 'Payment Records', path:'/pay-records', icon:'gittip'},
 
-        {label: 'Account Settings', path:'account-setting', icon:'cogs'}
+        {label: 'Account Settings', path:'/account-setting', icon:'cogs'}
 
     ]
 

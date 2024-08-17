@@ -1,21 +1,28 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import logo from '../../../circled-user-icon-.png';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
 import { ToastContainer, toast, ToastPosition } from 'react-toastify';
 
-
-export const NewCustomer = () => {
+export const CustomerAccount = () => {
   const navigate = useNavigate();
+  const userId = parseInt(localStorage.getItem('userId'));
+
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState('');
+  const [existingImage, setExistingImage] = useState(null);
   const [role, setRole] = useState('Customer');
-  const [account_status, setStatus] = useState('Active'); // add a new state for status with default value 'Active'
+  const [account_status, setStatus] = useState('Active');
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (password !== confirmPassword) {
+      alert('New password and confirm password do not match');
+      return;
+    }
     const customer = {
       username,
       email,
@@ -26,41 +33,46 @@ export const NewCustomer = () => {
 
     const formData = new FormData();
     formData.append('customer', JSON.stringify(customer));
-    formData.append('image', image, 'image'); // specify the name attribute as 'image'
-
-    console.log('Form data:', formData);
+    if (image) {
+      formData.append('image', image, 'image');
+    }
 
     try {
-      const response = await fetch('http://localhost:9000/api/customer/add', {
-        method: 'POST',
+      const response = await fetch(`http://localhost:9000/api/customer/update/${userId}`, {
+        method: 'PATCH',
         body: formData,
       });
 
       if (response.ok) {
-
-        toast.success("Created successfully", {
+        toast.success("Updated successfully", {
           className: "toast-success-inside",
           position: "top-right", // or "top-left", "bottom-right", "bottom-left"
-          autoClose: 5000,
+          autoClose: 4000,
         });
-
-        setTimeout(() => {
-          navigate(-1); // redirect to customers list page
-        }, 4000);
-
-        // navigate(-1); // redirect to customers list page
       } else {
-        console.error('Error creating customer:', response.status);
+        console.error('Error updating customer:', response.status);
       }
     } catch (error) {
-      console.error('Error creating customer:', error);
+      console.error('Error updating customer:', error);
     }
   };
+
+  useEffect(() => {
+    axios.get(`http://localhost:9000/api/customer/byId/${userId}`)
+      .then(response => {
+        setUsername(response.data.username);
+        setEmail(response.data.email);
+        setRole(response.data.role);
+        setStatus(response.data.account_status);
+        setExistingImage(response.data.image); // set existing image
+      })
+  }, [userId]);
 
   return (
     <form onSubmit={handleSubmit}>
       <ToastContainer/>
-      <h5 className='fw-bold mb-2 text-uppercase'>Add New Customer </h5>
+
+      <h5 className='fw-bold mb-2 text-uppercase'>Update Customer with ID {userId} </h5>
       <p className='mb-5'>Fill all required information</p>
       <div className='row'>
         <div className='row mb-4'>
@@ -82,8 +94,8 @@ export const NewCustomer = () => {
               type='email'
               className='form-control'
               placeholder='email'
-              value={email}
               required
+              value={email}
               onChange={(event) => setEmail(event.target.value)}
             />
           </div>
@@ -93,56 +105,63 @@ export const NewCustomer = () => {
             <input
               type='file'
               className='form-control'
-              required
               onChange={(event) => {
-                console.log('Image uploaded:', event.target.files[0]);
+                console.log(event.target.files[0]);
                 setImage(event.target.files[0]);
               }}
             />
           </div>
-        </div>
 
-        <div className='row mb-4 mt-4'>
-          <div className='col-md-4'>
+          <div className='col-md-4 mt-5'>
             <p className='form-label'>Password</p>
             <input
               type='password'
               className='form-control'
               placeholder='password'
               value={password}
-              required
               onChange={(event) => setPassword(event.target.value)}
             />
           </div>
 
-          <div className='col-md-4'>
+          <div className='col-md-4 mt-5'>
             <p className='form-label'>Confirm Password</p>
             <input
               type='password'
               className='form-control'
               placeholder='confirm password'
               value={confirmPassword}
-              required
               onChange={(event) => setConfirmPassword(event.target.value)}
             />
           </div>
-        </div>
 
-        <div className='row mb-4 mt-5'>
-          <div className='col-md-6'>
-            <button className='btn btn-primary w-50'>Save</button>
-          </div>
-
-          <div className='col-md-6'>
-            <button
-              type='button'
-              onClick={() => navigate(-1)}
-              className='btn btn-danger w-50'
+          <div className='col-md-4 mt-5'>
+            <p className='form-label'>Status</p>
+            <input
+              type='text'
+              className='form-control'
+              placeholder='password'
+              value={account_status}
+              readOnly
+              onChange={(event) => setStatus(event.target.value)}
+            />
+            {/* <select
+              className='form-control'
+              value={account_status}
+              
+              onChange={(event) => setStatus(event.target.value)}
             >
-              Back
-            </button>
+              <option value='Active'>Active</option>
+              <option value='Inactive'>Inactive</option>
+            </select> */}
           </div>
         </div>
+
+        <div className='col-md-6 mt-5'>
+          <button type='submit' className='btn btn-primary'>
+            Update Information
+          </button>
+        </div>
+
       </div>
     </form>
   );

@@ -146,6 +146,7 @@ export const EditCustomer = () => {
               className='form-control'
               placeholder='username'
               value={username}
+              required
               onChange={(event) => setUsername(event.target.value)}
             />
           </div>
@@ -157,6 +158,7 @@ export const EditCustomer = () => {
               className='form-control'
               placeholder='email'
               value={email}
+              required
               onChange={(event) => setEmail(event.target.value)}
             />
           </div>
@@ -178,6 +180,7 @@ export const EditCustomer = () => {
             <select
               className='form-control'
               value={account_status}
+              required
               onChange={(event) => setStatus(event.target.value)}
             >
               <option value='Active'>Active</option>
