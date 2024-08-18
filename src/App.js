@@ -49,6 +49,7 @@ import { Reports } from './components/staff/generateReport/Reports';
 import { PrintReport } from './components/staff/generateReport/PrintReport';
 import { AccountCustomer } from './components/customer/accountsetting/Accounts';
 import { CustomerAccount } from './components/customer/accountsetting/CustomerAccount';
+import { ResetPassword } from './components/ResetPassword';
 
 
 
@@ -60,6 +61,7 @@ function App() {
 
         <Route path='/' element={<Login/>} />
         <Route path='new-account' element={<Register/>} />
+        <Route path='/reset-password' element={<ResetPassword/>}/>
 
         {/* Admin */}
 

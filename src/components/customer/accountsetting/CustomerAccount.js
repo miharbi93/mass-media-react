@@ -20,7 +20,12 @@ export const CustomerAccount = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (password !== confirmPassword) {
-      alert('New password and confirm password do not match');
+      // alert('New password and confirm password do not match');
+      toast.error("Passwords does not match", {
+        className: "toast-error-inside",
+        position: "top-right", // or "top-left", "bottom-right", "bottom-left"
+        autoClose: 4000,
+      });
       return;
     }
     const customer = {

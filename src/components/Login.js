@@ -1,13 +1,13 @@
 import axios from 'axios';
-import React, { useState } from 'react'
-import { NavLink, useNavigate } from 'react-router-dom'
+import React, { useState } from 'react';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast, ToastPosition } from 'react-toastify';
 import Logo from '../circled-user-icon-.png'
 
 export const Login = () => {
 
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
 
@@ -16,12 +16,15 @@ export const Login = () => {
   const handleSubmit = async (event) =>{
     event.preventDefault();
     try{
-      const response  = await axios.get(`http://localhost:9000/api/user/username/${username}`);
+      const response  = await axios.get(`http://localhost:9000/api/user/usernames/${email}`, {
+        params: {
+          password: password
+        }
+      });
 
       const userData = await response.data;
 
-      if(userData.email === username && userData.password === password){
-
+      if(userData){
         if(userData.role === 'Staff'){
 
           toast.success("Login successfully", {
@@ -31,7 +34,6 @@ export const Login = () => {
           
           });
 
-          // localStorage.setItem('username',userData.username);
           localStorage.setItem('userRole', userData.role);
           localStorage.setItem('userId', userData.userId);
           localStorage.setItem('name', userData.mediaChannel.mediaName);
@@ -39,7 +41,6 @@ export const Login = () => {
           localStorage.setItem('mediaId', userData.mediaChannel.mediaId);
 
           setTimeout(()=>{
-
             navigate('/staff-dashboard',{
               replace:true,
               state: { userRole: userData.role},
@@ -93,16 +94,12 @@ export const Login = () => {
         }
 
       }else{
-      console.log(response.status);
-
-
-        // setError("Incorrect username or password");
+        setError("Incorrect username or password");
         toast.error("Invalid username or password ", {
           className: "toast-error",
           position: 'top-right',
           autoClose: 5000,
         });
-        
       }
     }catch(error){
       toast.error("Cridential Not Found", {
@@ -137,7 +134,7 @@ export const Login = () => {
                       <span class="input-group-text">
                         <i className='fa fa-envelope-o'></i>
                       </span>
-                      <input type="email" class="form-control" value={username} onChange={(e) => setUsername(e.target.value)}  placeholder='Email address' required />
+                      <input type="email" class="form-control" value={email} onChange={(e) => setEmail(e.target.value)}  placeholder='Email address' required />
                     </div>
                   </div>
                   <div class="col-12">
@@ -154,6 +151,7 @@ export const Login = () => {
                       <button class="btn btn-primary btn-lg" type="submit">Log In</button>
                     </div>
                   </div>
+                  <Link to='/reset-password' className="link-primary text-decoration-none">Forgot Password</Link>
                 </div>
               </form>
               <div class="row">

@@ -1,6 +1,7 @@
 import React from 'react'
 import { Header } from './Header'
 import logo from '../../circled-user-icon-.png';
+import logo2 from '../../pro-1.jpeg';
 import { NavLink } from 'react-router-dom';
 import links from './Links';
 
@@ -18,7 +19,12 @@ export const Navigation = ({userRole = localStorage.getItem('userRole')}) => {
     <nav className='sidebar'>
         <div className='menu-content'>
             <div className='profile_info'>
-                <img src={`data:image/png;base64,${image}`} className='profile_image' />
+                {userRole === 'Admin' ?(
+                    <img src={logo2} className='profile_image' />
+                ):(
+                    <img src={`data:image/png;base64,${image}`} className='profile_image' />
+                )}
+                {/* <img src={`data:image/png;base64,${image}`} className='profile_image' /> */}
                 {/* <img src={logo}  className='profile_image'/> */}
                 <h4 style={{ "color": "white" }}>{name}</h4>
             </div>

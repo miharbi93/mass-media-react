@@ -196,9 +196,9 @@ export const EditCustomer = () => {
         </div>
 
         <div className='col-md-4 mt-5'>
-          <button type='button' className='btn btn-secondary w-50' onClick={handleDefaultPassword}>
+          {/* <button type='button' className='btn btn-secondary w-50' onClick={handleDefaultPassword}>
             Set Default Password
-          </button>
+          </button> */}
         </div>
 
         <div className='col-md-4 mt-5'>

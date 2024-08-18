@@ -483,7 +483,7 @@ export const PrintReport = () => {
           </select>
         </div>
 
-        <div className='row float-left mt-5'>
+        <div className='row  mt-5'>
           
         {pdf && (
           <a href={pdf} download="report.pdf">
