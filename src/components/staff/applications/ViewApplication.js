@@ -111,13 +111,14 @@ export const ViewApplications = () => {
                     <table className='table table-hover table-bordered'>
                       <thead>
                         <tr>
-                          <th className='text-center p-2'>ID</th>
+                          <th className='text-center p-2'>SN</th>
+                          <th className='text-center'>APP ID</th>
                           <th className='text-center'>Customer Name</th>
                           <th className='text-center'>Email</th>
                           <th className='text-center'>Service Name</th>
                           <th className='text-center'>Start Date</th>
                           <th className='text-center'>End Date</th>
-                          <th className='text-center'>Day</th>
+                          {/* <th className='text-center'>Day</th> */}
                           <th className='text-center'>Amount</th>
                           <th className='text-center'>Advertise Doc</th>
                           <th className='text-center'>Uthibitisho Doc</th>
@@ -129,12 +130,13 @@ export const ViewApplications = () => {
                         {applications.map((application, index) => (
                           <tr key={index}>
                             <td>{index + 1}</td>
+                            <td>#00{application.applicationId}</td>
                             <td>{application.username}</td>
                             <td>{application.email}</td>
                             <td>{application.mediaServiceName}</td>
                             <td>{application.startDate}</td>
                             <td>{application.endDate}</td>
-                            <td>{application.dayPackage}</td>
+                            {/* <td>{application.dayPackage}</td> */}
                             <td>TZS {application.amount}</td>
                             <td>
                               <button className='btn btn-primary' onClick={() => handleDownloadDocument(application.applicationId, 'advertise')}>

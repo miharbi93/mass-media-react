@@ -140,7 +140,7 @@ export const GenerateBill = () => {
               <option value="">Select an application ID</option>
               {applications.filter((application) => !hasGeneratedControlNumber(application.applicationId)).map((application) => (
                 <option key={application.applicationId} value={application.applicationId}>
-                  {application.applicationId}
+                  #00{application.applicationId}
                 </option>
               ))}
             </select>
@@ -176,6 +176,7 @@ export const GenerateBill = () => {
                       <thead>
                         <tr>
                           <th className='text-center p-2'>SN</th>
+                          <th className='text-center'>APP ID</th>
                           <th className='text-center'>Payment ID</th>
                           <th className='text-center'>Control Number</th>
                           <th className='text-center'>Amount</th>
@@ -190,7 +191,8 @@ export const GenerateBill = () => {
                         {listPayment.map((payment, index) => (
                           <tr key={payment.paymentId}>
                             <td>{index + 1}</td>
-                            <td>{payment.paymentId}</td>
+                            <td className='text-center'>#00{payment.applicationId}</td>
+                            <td className='text-center'>#00{payment.paymentId}</td>
                             <td className='text-center'>{payment.controlNumber}</td>
                             <td className='text-center'>{payment.amount}</td>
                             <td className='text-center'>{payment.paidAmount}</td>

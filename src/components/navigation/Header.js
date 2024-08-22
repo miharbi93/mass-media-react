@@ -1,6 +1,9 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 
+import logo3 from '../../3.png';
+
+
 export const  Header = () => {
   return (
     <>
@@ -15,7 +18,7 @@ export const  Header = () => {
     </nav>
 
     <nav className='logo_sidebar'>
-        <h4>Logo sidebar</h4>
+        <img src={logo3}  style={{width:'100%'}}/>
     </nav>
     
     </>

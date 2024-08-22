@@ -130,7 +130,8 @@ export const ViewApplication = () => {
                     <table className='table table-hover table-bordered'>
                       <thead>
                         <tr>
-                          <th className='text-center p-2'>ID</th>
+                          <th className='text-center p-2'>SN</th>
+                          <th className='text-center'>APP ID</th>
                           <th className='text-center'>Media Name</th>
                           <th className='text-center'>Service Name</th>
                           <th className='text-center'>Start Date</th>
@@ -147,6 +148,7 @@ export const ViewApplication = () => {
                         {applications.map((application, index) => (
                           <tr key={index}>
                             <td>{index + 1}</td>
+                            <td>#00{application.applicationId}</td>
                             <td>{application.mediaService.mediaChannel.mediaName}</td>
                             <td>{application.mediaService.serviceName}</td>
                             <td>{application.startDate}</td>

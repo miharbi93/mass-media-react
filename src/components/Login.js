@@ -1,6 +1,6 @@
 import axios from 'axios';
-import React, { useState } from 'react';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast, ToastPosition } from 'react-toastify';
 import Logo from '../circled-user-icon-.png'
@@ -111,6 +111,26 @@ export const Login = () => {
       console.error(error);
     }
   }
+
+
+  const location = useLocation();
+
+  useEffect(() => {
+
+    if (location.pathname === '/') {
+
+      localStorage.removeItem('userId');
+      localStorage.removeItem('userRole');
+      localStorage.removeItem('name');
+      localStorage.removeItem('image');
+      localStorage.removeItem('email');
+      localStorage.removeItem('mediaId');
+
+    }
+
+  }, [location]);
+
+
   return (
     <div class="bg-light py-md-5 vh-100">
       <div class="container">
@@ -121,7 +141,12 @@ export const Login = () => {
               <div class="row">
                 <div class="col-12">
                   <div class="text-center mb-5">
-                    <h3>MASS MEDIA<span style={{ color: '#19B3D3' }}> HUB</span></h3>
+                    <h3>
+                    <span className='ms' style={{fontWeight:'bold'}}>MASS </span>
+                       <span style={{fontWeight:'bold'}} >MEDIA </span> 
+                       <span style={{fontWeight:'bold'}} 
+                       className='ad'>ADVERTISING</span>
+                      <span style={{fontWeight:'bold'}} className='hub'> HUB</span></h3>
                   </div>
                 </div>
               </div>

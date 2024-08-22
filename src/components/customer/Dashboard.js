@@ -8,6 +8,9 @@ export const CustomerDashboard = () => {
 
   const [showChannel, setShowChannel] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [totalService, setTotalService] = useState(0);
+
+  const [service,setService] = useState([]);
 
   useEffect(() => {
     axios.get('http://localhost:9000/api/channel/all')
@@ -17,6 +20,17 @@ export const CustomerDashboard = () => {
       });
   }, []);
 
+  useEffect(()=>{
+    axios.get('http://localhost:9000/api/services/all')
+    .then((response)=>{
+      console.log(response.data);
+      setService(response.data)
+      
+    })
+  },[]);
+
+
+  // {data.filter((media) => media.mediaId === item.mediaId).length}
   return (
     <>
       <Navigation />
@@ -67,7 +81,11 @@ export const CustomerDashboard = () => {
                         <div className="p-1 mt-2 bg-light ms-2 d-flex justify-content-between rounded text-white stats">
                           <div className="d-flex flex-column">
                             <span className="rating text-primary">Available Service</span>
-                            <span className="number3 text-success">8.9</span>
+                            <span className="number3 text-success">
+            
+                            {service.filter((mediaChannel) => mediaChannel.mediaChannel.mediaId === item.mediaId).length}
+
+                            </span>
                           </div>
                         </div>
 

@@ -13,9 +13,29 @@ export const Register = () => {
   const [image, setImage] = useState(null);
   const [role, setRole] = useState('Customer');
   const [account_status, setStatus] = useState('Active'); // add a new state for status with default value 'Active'
-
   const handleSubmit = async (event) => {
     event.preventDefault();
+  
+    // Check if email exists
+    try {
+      const response = await fetch(`http://localhost:9000/api/user/username/${email}`);
+      if (response.ok) {
+        const data = await response.json();
+        if (data) {
+          toast.error("Email already exists", {
+            className: "toast-error",
+            position: "top-right", // or "top-left", "bottom-right", "bottom-left"
+            autoClose: 5000,
+          });
+          return;
+        }
+      }
+    } catch (error) {
+      console.error('Error checking email:', error);
+    }
+  
+    if(password === confirmPassword){
+    // If email does not exist, proceed with registration
     const customer = {
       username,
       email,
@@ -23,36 +43,27 @@ export const Register = () => {
       account_status,
       role,
     };
-
+  
     const formData = new FormData();
     formData.append('customer', JSON.stringify(customer));
     formData.append('image', image, 'image'); // specify the name attribute as 'image'
-
+  
     console.log('Form data:', formData);
-
-    // if(password === confirmPassword){
-
+  
     try {
-      
-        const response = await fetch('http://localhost:9000/api/customer/add', {
-          method: 'POST',
-          body: formData,
-        });
-    
-
+      const response = await fetch('http://localhost:9000/api/customer/add', {
+        method: 'POST',
+        body: formData,
+      });
+  
       if (response.ok) {
-        // navigate(-1); // redirect to customers list page
-        // alert("Created Successfull")
         toast.success("Created successfully", {
           className: "toast-success",
           position: "top-right", // or "top-left", "bottom-right", "bottom-left"
           autoClose: 5000,
-        
         });
-
-
+  
         setTimeout(()=>{
-
           navigate('/',{
             replace:true,
             // state: { userRole: userData.role},
@@ -64,10 +75,15 @@ export const Register = () => {
     } catch (error) {
       console.error('Error creating customer:', error);
     }
+  }else{
+    toast.error("Password does not match ", {
+      className: "toast-error",
+      position: "top-right", // or "top-left", "bottom-right", "bottom-left"
+      autoClose: 5000,
+    });
   }
-  // } }else{
-  //   alert("Password does not match");
-  // }
+
+}
   return (
     <div class="bg-light py-md-5 vh-100">
 
@@ -93,6 +109,7 @@ export const Register = () => {
                             <div className="input-group mb-4">
                                 <input type="text" 
                                 className="form-control" 
+                                required
                                 placeholder="Ex. Miharbi Rajab"
                                 value={username}
                                 onChange={(event) => setUsername(event.target.value)} />
@@ -104,6 +121,7 @@ export const Register = () => {
                             <div className='input-group mb-4'>
                                 <input type='email' 
                                 className='form-control' 
+                                required
                                 placeholder='Email'
                                 value={email}
                                 onChange={(event) => setEmail(event.target.value)} />
@@ -118,6 +136,7 @@ export const Register = () => {
                             <div className='input-group mb-4'>
                                 <input type='file' 
                                 className='form-control mt-3' 
+                                required
                                 placeholder='Address' 
                                 onChange={(event) => {
                                   console.log('Image uploaded:', event.target.files[0]);
@@ -133,6 +152,7 @@ export const Register = () => {
                             <div className='input-group mb-4'>
                                 <input type='password' 
                                 className='form-control' 
+                                required
                                 placeholder='Password'
                                 value={password}
                                 onChange={(event) => setPassword(event.target.value)} />
@@ -144,6 +164,7 @@ export const Register = () => {
                           <div className='input-group mb-4'>
                             <input type='password' 
                             className='form-control' 
+                            required
                             placeholder='Confirm Password'
                             value={confirmPassword}
                             onChange={(event) => setConfirmPassword(event.target.value)}

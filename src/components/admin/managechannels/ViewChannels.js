@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import logo from '../../../download.png'
-import logo3 from '../../../images (52).png'
 import axios from 'axios'
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast, ToastPosition } from 'react-toastify';
