@@ -72,7 +72,7 @@ export const ViewServices = () => {
                             </div>
                           ) : (
                             <>
-                              <h4 className='mb-5' style={{fontWeight:'bold'}}>Media Services Available</h4>
+                              <h4 className='mb-5' style={{fontWeight:'bold'}}>MEDIA SERVICE AVAILABLE</h4>
                               <table class="table">
                                 <thead>
                                   <tr>
@@ -88,7 +88,7 @@ export const ViewServices = () => {
                                       <th className='text-center'>{index + 1}</th>
                                       <td>{item.serviceName}</td>
                                       <td>{item.serviceDescription}</td>
-                                      <td>{item.servicePrice}</td>
+                                      <td  className='text-center'>{item.servicePrice}</td>
                                     </tr>
                                   ))}
    
