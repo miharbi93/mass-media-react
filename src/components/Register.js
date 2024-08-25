@@ -95,7 +95,12 @@ export const Register = () => {
               <div class="row">
                 <div class="col-12">
                   <div class="text-center mb-5">
-                    <h3>MASS MEDIA<span style={{ color: '#19B3D3' }}> HUB</span></h3>
+                  <h3>
+                    <span className='ms' style={{fontWeight:'bold'}}>MASS </span>
+                       <span style={{fontWeight:'bold'}} >MEDIA </span> 
+                       <span style={{fontWeight:'bold'}} 
+                       className='ad'>ADVERTISING</span>
+                      <span style={{fontWeight:'bold'}} className='hub'> HUB</span></h3>
                   </div>
                 </div>
               </div>

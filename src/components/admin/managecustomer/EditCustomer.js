@@ -135,7 +135,7 @@ export const EditCustomer = () => {
 
 <ToastContainer/>
 
-      <h5 className='fw-bold mb-2 text-uppercase'>Update Customer with ID {userId} </h5>
+      <h5 className='fw-bold mb-2 text-uppercase'>Update Customer </h5>
       <p className='mb-5'>Fill all required information</p>
       <div className='row'>
         <div className='row mb-4'>

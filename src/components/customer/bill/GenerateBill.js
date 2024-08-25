@@ -116,6 +116,8 @@ export const GenerateBill = () => {
               });
 
           fetchPayments();
+          fetchPaymentsForSpecificCustomer();
+
 
         })
         .catch(error => console.error("Error",error));

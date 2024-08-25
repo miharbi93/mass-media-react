@@ -52,6 +52,7 @@ import { CustomerAccount } from './components/customer/accountsetting/CustomerAc
 import { ResetPassword } from './components/ResetPassword';
 import { useEffect, useState } from 'react';
 import ProtectComponent from './components/ProtectComponent';
+import { ViewServices } from './components/customer/viewServices/ViewServices';
 
 
 
@@ -202,6 +203,8 @@ function App() {
             <Route index element={<CustomerAccount />} />
 
           </Route>
+
+          <Route path='/view-services/:mediaId' element={<ViewServices/>} />
 
         </Route>
 

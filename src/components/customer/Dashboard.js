@@ -90,7 +90,7 @@ export const CustomerDashboard = () => {
                         </div>
 
                         <div className="button ms-3 mt-4 mb-4 d-flex mt-3 flex-row align-items-center">
-                          <button className="btn btn-sm btn-outline-primary w-50">View More</button>
+                          <NavLink to={`/view-services/${item.mediaId}`} className="btn btn-sm btn-outline-primary w-50">View More</NavLink>
                           {item.status === 'Closed' ? (
                             <button className="btn btn-sm btn-light w-50 ms-2" disabled>Closed</button>
                           ) : (

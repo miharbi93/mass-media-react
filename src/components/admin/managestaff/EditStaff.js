@@ -87,7 +87,7 @@ export const EditStaff = () => {
     return (
         <form onSubmit={handleSubmit}>
             <ToastContainer/>
-            <h5 className='fw-bold mb-2 text-uppercase'>Update Media Channel Staff {userId}</h5>
+            <h5 className='fw-bold mb-2 text-uppercase'>Update Media Channel Staff</h5>
 
             <div className='row'>
                 <div className='row mt-5 mb-4'>

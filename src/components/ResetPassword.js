@@ -29,7 +29,7 @@ export const ResetPassword = () => {
           // setAlertMessage('Email not found!');
 
           toast.error("Email not found!", {
-            className: "toast-error-inside",
+            className: "toast-error",
             position: "top-right", // or "top-left", "bottom-right", "bottom-left"
             autoClose: 5000,
           
@@ -41,7 +41,7 @@ export const ResetPassword = () => {
         if (error.response && error.response.status === 404) {
           // setAlertMessage('Email not found!');
           toast.error("Email not found!", {
-            className: "toast-error-inside",
+            className: "toast-error",
             position: "top-right", // or "top-left", "bottom-right", "bottom-left"
             autoClose: 5000,
           
