@@ -11,7 +11,6 @@ export const PrintReport = () => {
   const [selectedMonth, setSelectedMonth] = useState(null);
   const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [showTable, setShowTable] = useState(false);
 
   const mediaId = parseInt(localStorage.getItem('mediaId'));
 
@@ -25,13 +24,13 @@ export const PrintReport = () => {
         });
       setTimeout(() => {
         setLoading(false);
-      }, 1000); // 30 seconds
+      }, 1000);
     };
     fetchData();
   }, []);
 
   useLayoutEffect(() => {
-    const filterData = async () => {
+    const filterData = () => {
       setLoading(true);
       const filteredData = data.filter((item) => {
         if (selectedYear || selectedMonth) {
@@ -43,61 +42,45 @@ export const PrintReport = () => {
       setFilteredData(filteredData);
       setTimeout(() => {
         setLoading(false);
-      }, 2000); // 30 seconds
+      }, 2000);
     };
     filterData();
   }, [data, selectedYear, selectedMonth]);
 
+  const generatePDF = async () => {
+    try {
+      const input = document.getElementById('report-content');
+      if (!input) return;
+
+      const canvas = await html2canvas(input);
+      const imgData = canvas.toDataURL('image/png');
+      const pdfDoc = new jsPDF('p', 'mm', 'a4');
+
+      const margin = 15;
+      const pdfWidth = pdfDoc.internal.pageSize.getWidth() - 2 * margin;
+      const imgWidth = pdfWidth;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+      // Add current date at the top left
+      const currentDate = date.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' });
+      pdfDoc.text(`Date: ${currentDate}`, margin, margin);
+
+      pdfDoc.addImage(imgData, 'PNG', margin, margin + 10, imgWidth, imgHeight);
+
+      const pdfBlob = pdfDoc.output('blob');
+      const pdfUrl = URL.createObjectURL(pdfBlob);
+
+      setPdf(pdfUrl);
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+    }
+  };
+
   useLayoutEffect(() => {
-    const generatePDF = async () => {
-      try {
-        const printButton = document.querySelector('.print-button');
-        printButton.style.display = 'none'; // hide the print button
-
-        const input = document.getElementById('report-content');
-
-        if (!input) return; // add this check to ensure the element exists
-
-        const pdfPageWidth = 210; // A4 width in mm
-        const pdfPageHeight = 297; // A4 height in mm
-        const margin = 15; // Margins in mm
-
-        const canvas = await html2canvas(input);
-
-        const imgData = canvas.toDataURL('image/png');
-
-        const pdfDoc = new jsPDF('p', 'mm', [pdfPageWidth, pdfPageHeight]);
-
-        const pdfWidth = (pdfPageWidth - 2 * margin) * 0.95; // 95% of the available width
-        const pdfHeight = (pdfPageHeight - 2 * margin) * 0.95; // 95% of the available height
-
-        const imgWidth = pdfWidth;
-        const imgHeight = canvas.height * imgWidth / canvas.width;
-
-        const position = [margin, margin];
-
-        pdfDoc.addImage(imgData, 'PNG', position[0], position[1], imgWidth, imgHeight);
-
-        pdfDoc.setFontSize(5);
-
-        const dateString = `${date.toLocaleDateString('en-US', { weekday: 'long' })} Printed ${date.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' })} ${date.toLocaleTimeString()}`;
-
-        pdfDoc.text(dateString, margin, margin - 10, null, null, 'left');
-
-        const pdfBlob = new Blob([pdfDoc.output('blob')], { type: 'application/pdf' });
-
-        const pdfUrl = URL.createObjectURL(pdfBlob);
-
-        console.log('Generated PDF URL:', pdfUrl);
-
-        setPdf(pdfUrl);
-      } catch (error) {
-        console.error('Error generating PDF:', error);
-      }
-    };
-
-    generatePDF();
-  }, [filteredData]);
+    if (!loading && filteredData.length > 0) {
+      generatePDF();
+    }
+  }, [loading, filteredData]);
 
   const handleYearChange = (event) => {
     setSelectedYear(event.target.value);
@@ -117,37 +100,30 @@ export const PrintReport = () => {
           <select className='form-select' value={selectedYear} onChange={handleYearChange}>
             <option value="">All</option>
             {Array.from(Array(5).keys()).map((year) => (
-              <option value={new Date().getFullYear() - year}>{new Date().getFullYear() - year}</option>
+              <option key={year} value={new Date().getFullYear() - year}>{new Date().getFullYear() - year}</option>
             ))}
           </select>
-          </div>
+        </div>
         <div className='col-md-1'>
           <label className='form-label'>Month:</label>
           <select className='form-select' value={selectedMonth} onChange={handleMonthChange}>
             <option value="">All</option>
             {Array.from(Array(12).keys()).map((month) => (
-              <option value={month + 1}>{month + 1}</option>
+              <option key={month} value={month + 1}>{month + 1}</option>
             ))}
           </select>
         </div>
-
-        <div className='col-md-5  mt-3'>
-
-        </div>
-
       </div>
+      
       {loading ? (
         <strong>
-          <i className=' mt-5 fa fa-spinner fa-spin'> </i> Loading...
+          <i className='mt-5 fa fa-spinner fa-spin'> </i> Loading...
         </strong>
       ) : (
         <div id="report-content">
-
-          <h2 className='text-center mb-4 mt-2'>{filteredData.mediaName} Mass Media Application  Reports</h2>
-
-
+          <h2 className='text-center mb-4 mt-2'>{filteredData.mediaName} Mass Media Application Reports</h2>
           {filteredData.length === 0 ? (
-            <div className="card  alert alert-primary  alert-dismissible fade show">
+            <div className="card alert alert-primary alert-dismissible fade show">
               <div className="card-body">
                 <h5 className="card-title"><i className='fa fa-warning'> </i>  No applications report found</h5>
                 <p className="card-text">There are no applications report to display for {selectedYear} on Month {selectedMonth}</p>
@@ -184,7 +160,6 @@ export const PrintReport = () => {
                       <td>{data.endDate}</td>
                       <td>{data.dayPackage}</td>
                       <td>{data.controlNumber}</td>
-                      {/* <td>{data.amount - data.paidAmount}</td> */}
                       <td style={{ fontWeight: 'bold' }}>
                         {data.amount - data.paidAmount <= 0 ? 'Complete' : 'Incomplete'}
                       </td>
@@ -197,9 +172,13 @@ export const PrintReport = () => {
           )}
         </div>
       )}
-      <a href={pdf} download="report.pdf">
-        <button className="btn btn-primary print-button"><i className='fa fa-download'> </i> Print Report</button>
-      </a>
+      {!loading && filteredData.length > 0 && pdf && (
+        <a href={pdf} download="report.pdf">
+          <button className="btn btn-primary print-button">
+            <i className='fa fa-download'> </i> Print Report
+          </button>
+        </a>
+      )}
     </div>
   );
 };
